@@ -182,6 +182,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1652388838694362641, guid: 6a343f811dbbf4b4a84815cbc4c9fcb7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1081478303}
+    - targetCorrespondingSourceObject: {fileID: 1652388838694362641, guid: 6a343f811dbbf4b4a84815cbc4c9fcb7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1081478304}
   m_SourcePrefab: {fileID: 100100000, guid: 6a343f811dbbf4b4a84815cbc4c9fcb7, type: 3}
 --- !u!1001 &938091888
 PrefabInstance:
@@ -257,6 +260,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f4144e9362cff4e93fdff227f87b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1081478304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081478302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: e5e2cc34d82dfad459c36bacb62ed28f, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3daf3e08-d223-4ca4-9469-cc189f851bc3
+    m_ActionName: 'ObjectControl/HoldObject[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bb038ccf-9bb8-47ee-bc11-d29e5b63fb86
+    m_ActionName: 'ObjectControl/ThrowObject[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ee70e9cc-e7fa-4a81-8acb-3efdcd03ec1e
+    m_ActionName: 'ObjectControl/DropObject[/Keyboard/g]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: ObjectControl
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &1153982651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -440,38 +497,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &5877140953046937619 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8653563848095977024, guid: 70a92a450daaa404287e98909d48c224, type: 3}
-  m_PrefabInstance: {fileID: 7057725371107575441}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &5877140953046937620
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5877140953046937619}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1001 &7057725371107575441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -527,10 +552,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8653563848095977024, guid: 70a92a450daaa404287e98909d48c224, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5877140953046937620}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70a92a450daaa404287e98909d48c224, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
