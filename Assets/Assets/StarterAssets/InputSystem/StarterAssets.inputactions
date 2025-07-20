@@ -27,7 +27,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "8c4abdf8-4099-493a-aa1a-129acec7c3df",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -44,16 +44,25 @@
                 {
                     "name": "Hold",
                     "type": "Button",
-                    "id": "7eedca8b-3484-4128-a89b-0e322b541b4c",
+                    "id": "5ca35594-c1b0-4733-8663-13c1cca96de1",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Throw",
+                    "name": "Drop",
                     "type": "Button",
-                    "id": "ee444096-4844-4417-b21a-a7662e50f7f7",
+                    "id": "470018e9-054e-4ff2-a515-d92dc6b3ef7e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Set",
+                    "type": "Button",
+                    "id": "4931d909-a953-4a7c-a7f5-03ad69742a99",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -239,7 +248,7 @@
                 },
                 {
                     "name": "",
-                    "id": "0c40b584-64a6-46e8-8f5c-6a3025c5b4b8",
+                    "id": "f749e190-0545-4c0a-8af0-cc6cfbd21cd1",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -250,12 +259,23 @@
                 },
                 {
                     "name": "",
-                    "id": "5e7193d9-a7bd-4030-bda2-d834765915a5",
+                    "id": "ec44b574-2352-4dd5-a368-ed1bca89650e",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Throw",
+                    "action": "Drop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "326ffb72-8890-45c8-8892-bbd7b676543a",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Set",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

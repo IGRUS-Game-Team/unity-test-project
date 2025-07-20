@@ -1,3 +1,4 @@
+using Unity.Android.Gradle;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,13 +6,14 @@ public class PlyaerObjectSelector : MonoBehaviour
 {
     public Transform holdPoint;  // ī�޶� �Ʒ� HoldPoint�� Inspector���� ����
     private bool isHolding = false;
-    private PlayerPickUpController heldObject;
+
+    private BlockIsHolding heldObject;
     
     void Start()
     {
-        // PlayerInputHandler inputHandler = FindFirstObjectByType<PlayerInputHandler>();
-        // inputHandler.OnSelectEvent += TryPickupObject;
-        // inputHandler.OnDropEvent += DropPickupObject;
+        PlayerInputHandler inputHandler = FindFirstObjectByType<PlayerInputHandler>();
+        inputHandler.OnSelectEvent += TryPickupObject;
+        inputHandler.OnDropEvent += DropPickupObject;
     }
     void Update()
     {
@@ -20,7 +22,7 @@ public class PlyaerObjectSelector : MonoBehaviour
            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
            if (Physics.Raycast(ray, out RaycastHit hit, 5f))
            {
-               PlayerPickUpController pickup = hit.transform.GetComponent<PlayerPickUpController>();
+               BlockIsHolding pickup = hit.transform.GetComponent<BlockIsHolding>();
                if (pickup != null)
                {
                    //TurnOffPhysics(pickup); // ���� ���ֱ�(����� �� ��鸮�� �ʵ���)
@@ -32,56 +34,56 @@ public class PlyaerObjectSelector : MonoBehaviour
            }
        }
     }
-    // private void TryPickupObject()
-    // {
-    //     if (isHolding) return;
+    private void TryPickupObject()
+    {
+        if (isHolding) return;
 
-    //     Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-    //     if (Physics.Raycast(ray, out RaycastHit hit, 5f))
-    //     {
-    //         PlayerPickUpController pickup = hit.transform.GetComponent<PlayerPickUpController>();
-    //         if (pickup != null)
-    //         {
-    //             TurnOffPhysics(pickup);
-    //             pickup.transform.SetParent(holdPoint);
-    //             pickup.transform.localPosition = Vector3.zero;
-    //             pickup.transform.localRotation = Quaternion.identity;
-    //             pickup.isHeld = true;
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit hit, 5f))
+        {
+            BlockIsHolding pickup = hit.transform.GetComponent<BlockIsHolding>();
+            if (pickup != null)
+            {
+                TurnOffPhysics(pickup);
+                pickup.transform.SetParent(holdPoint);
+                pickup.transform.localPosition = Vector3.zero;
+                pickup.transform.localRotation = Quaternion.identity;
+                pickup.isHeld = true;
 
-    //             heldObject = pickup;
-    //             isHolding = true;
-    //         }
-    //     }
+                heldObject = pickup;
+                isHolding = true;
+            }
+        }
 
-    // }
-    // private void DropPickupObject()
-    // {
-    //     if (!isHolding || heldObject == null) return;
-    //     TurnOnPhysics(heldObject);
+    }
+    private void DropPickupObject()
+    {
+        if (!isHolding || heldObject == null) return;
+        TurnOnPhysics(heldObject);
 
-    //     heldObject.transform.SetParent(null); //�θ𿡼� �и�
+        heldObject.transform.SetParent(null); //�θ𿡼� �и�
 
-    //     Rigidbody rb = heldObject.GetComponent<Rigidbody>();
-    //     rb.AddForce(Camera.main.transform.forward * 10f, ForceMode.Impulse); //ī�޶� ���� �������� �о��ֱ�
+        Rigidbody rb = heldObject.GetComponent<Rigidbody>();
+        rb.AddForce(Camera.main.transform.forward * 10f, ForceMode.Impulse); //ī�޶� ���� �������� �о��ֱ�
 
-    //     heldObject.isHeld = false;
-    //     isHolding = false;
-    //     heldObject = null;
+        heldObject.isHeld = false;
+        isHolding = false;
+        heldObject = null;
 
-    // }
+    }
 
-    // private void TurnOffPhysics(PlayerPickUpController pickup)
-    // {
-    //     pickup.GetComponent<Rigidbody>().detectCollisions = false; // �浹 ���� ����
-    //     pickup.GetComponent<Rigidbody>().isKinematic = true;       // ������ ��� ����
-    //     pickup.GetComponent<Rigidbody>().useGravity = false;       // �߷� ���� �� ����
-    //     pickup.GetComponent<Collider>().enabled = false; // �浹 ��ü ��Ȱ��ȭ
-    // }
-    // private void TurnOnPhysics(PlayerPickUpController pickup)
-    // {
-    //     pickup.GetComponent<Rigidbody>().detectCollisions = true; 
-    //     pickup.GetComponent<Rigidbody>().isKinematic = false;       
-    //     pickup.GetComponent<Rigidbody>().useGravity = true;       
-    //     pickup.GetComponent<Collider>().enabled = true; 
-    // }
+    private void TurnOffPhysics(BlockIsHolding pickup)
+    {
+        pickup.GetComponent<Rigidbody>().detectCollisions = false; // �浹 ���� ����
+        pickup.GetComponent<Rigidbody>().isKinematic = true;       // ������ ��� ����
+        pickup.GetComponent<Rigidbody>().useGravity = false;       // �߷� ���� �� ����
+        pickup.GetComponent<Collider>().enabled = false; // �浹 ��ü ��Ȱ��ȭ
+    }
+    private void TurnOnPhysics(BlockIsHolding pickup)
+    {
+        pickup.GetComponent<Rigidbody>().detectCollisions = true; 
+        pickup.GetComponent<Rigidbody>().isKinematic = false;       
+        pickup.GetComponent<Rigidbody>().useGravity = true;       
+        pickup.GetComponent<Collider>().enabled = true; 
+    }
 }

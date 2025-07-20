@@ -13,8 +13,9 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 
+		public bool drop;
+		public bool set;
 		public bool hold;
-		public bool throwObject;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -47,14 +48,18 @@ namespace StarterAssets
 			SprintInput(value.isPressed);
 		}
 
+
 		public void OnHold(InputValue value)
 		{
 			HoldInput(value.isPressed);
 		}
-
-		public void OnThrowObject(InputValue value)
+		public void OnDrop(InputValue value)
 		{
-			ThrowObjectInput(value.isPressed);
+			DropInput(value.isPressed);
+		}
+				public void OnSet(InputValue value)
+		{
+			SetInput(value.isPressed);
 		}
 #endif
 
@@ -82,10 +87,17 @@ namespace StarterAssets
 		{
 			hold = newHoldState;
 		}
-		public void ThrowObjectInput(bool newThrowObjectState)
+		
+		public void SetInput(bool newSetState)
 		{
-			throwObject = newThrowObjectState;
+			set = newSetState;
 		}
+		public void DropInput(bool newDropState)
+		{
+			drop = newDropState;
+		}
+		
+		
 		
 		private void OnApplicationFocus(bool hasFocus)
 		{
