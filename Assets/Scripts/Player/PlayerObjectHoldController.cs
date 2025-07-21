@@ -1,16 +1,72 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using StarterAssets;
+using System;
 
 public class PlayerObjectHoldController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] float placeRange = 3f;
+    [SerializeField] Transform holdPoint;
+    [SerializeField] float pickupRange;
+    [SerializeField] LayerMask pickupLayer;
+
+    PlayerPickUpController playerPickUpController;
+
+    private StarterAssetsInputs input;
+    public BlockIsHolding heldObject;
+    private bool isHolding => heldObject != null;
+    void Awake()
     {
-        
+        input = GetComponent<StarterAssetsInputs>();
+        playerPickUpController = GetComponent<PlayerPickUpController>();
+        pickupRange = playerPickUpController.pickupRange;
+        pickupLayer = playerPickUpController.pickupLayer;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (input.hold && !isHolding)
+        {
+            TryPickup();
+            input.HoldInput(false);
+        }
     }
+
+    private void TryPickup()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, pickupLayer))
+        {
+            var target = hit.collider.GetComponent<BlockIsHolding>();
+            if (target == null || target.isHeld) return;
+
+            heldObject = target;
+            heldObject.isHeld = true;
+            heldObject.originalParent = target.transform.parent; // 원래 부모 기억
+
+            var rb = heldObject.GetComponent<Rigidbody>();
+            TurnOffPhysics(rb);
+
+            heldObject.GetComponent<Collider>().enabled = false;
+            heldObject.transform.SetParent(holdPoint);
+            heldObject.transform.localPosition = Vector3.zero;
+            heldObject.transform.localRotation = Quaternion.identity;
+        }
+    }
+
+    private static void TurnOffPhysics(Rigidbody rb)
+    {
+        rb.isKinematic = true;
+        rb.detectCollisions = false;
+        rb.useGravity = false;
+    }
+    public void ReleaseHeldObject()
+    {
+        if (heldObject != null)
+            {
+                heldObject.isHeld = false;
+                heldObject = null;
+            }
+    }
+
 }
