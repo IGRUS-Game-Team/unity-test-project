@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - CinemachineTarget
+  - NonPas
+  - Npc
+  - Store
+  - NonPass
+  - SettableSurface
   layers:
   - Default
   - TransparentFX
@@ -12,7 +17,7 @@ TagManager:
   - Box
   - Water
   - UI
-  - 
+  - Pass
   - 
   - 
   - 
