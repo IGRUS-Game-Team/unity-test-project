@@ -4,14 +4,15 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - NonPass
+  - CinemachineTarget
+  - NonPas
   - Npc
   - Store
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - NonPass
+  - Box
   - Water
   - UI
   - Pass
