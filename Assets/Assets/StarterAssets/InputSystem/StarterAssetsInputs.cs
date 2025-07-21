@@ -57,7 +57,7 @@ namespace StarterAssets
 		{
 			DropInput(value.isPressed);
 		}
-				public void OnSet(InputValue value)
+		public void OnSet(InputValue value)
 		{
 			SetInput(value.isPressed);
 		}
