@@ -3210,7 +3210,7 @@ GameObject:
   - component: {fileID: 2919823153202857021}
   m_Layer: 0
   m_Name: Base Npc
-  m_TagString: Npc
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

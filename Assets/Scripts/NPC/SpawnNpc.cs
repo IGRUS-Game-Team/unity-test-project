@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class NpcSpawner : MonoBehaviour
 {
+    [Header("NPC 스포너 위치")]
     [SerializeField] Transform spawnPoint;
-    public GameObject[] npcPrefabs;
 
-    public float minDelay = 1f;
-    public float maxDelay = 3f;
+    [Header("NPC 프리팹들")]
+    [SerializeField] GameObject[] npcPrefabs;
+
+    [Header("NPC 스폰 딜레이")]
+    [SerializeField] float minDelay = 1f;
+    [SerializeField] float maxDelay = 3f;
 
     float nextSpawnTime;
 
