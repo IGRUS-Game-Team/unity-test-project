@@ -8,6 +8,8 @@ TagManager:
   - NonPas
   - Npc
   - Store
+  - NonPass
+  - SettableSurface
   layers:
   - Default
   - TransparentFX
