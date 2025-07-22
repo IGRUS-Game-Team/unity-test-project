@@ -26,7 +26,7 @@ public class PlayerObjectSetController : MonoBehaviour
     void Update()
     {
         heldObject = playerObjectHoldController.heldObject;
-
+        if (heldObject == null && input.set == true) input.SetInput(false);
         if (isHolding)
         {
 
