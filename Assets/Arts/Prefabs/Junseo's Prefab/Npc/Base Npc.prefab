@@ -3205,9 +3205,9 @@ GameObject:
   - component: {fileID: 2948872332297630002}
   - component: {fileID: 688011773136789523}
   - component: {fileID: 3477775980429895567}
+  - component: {fileID: 2919823153202857021}
   - component: {fileID: 7671640666551700399}
   - component: {fileID: 7708047761709083350}
-  - component: {fileID: 2919823153202857021}
   m_Layer: 0
   m_Name: Base Npc
   m_TagString: NPC
@@ -3266,6 +3266,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasVisitedStore: 0
+--- !u!114 &2919823153202857021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4045326945149514471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3034922a91a1cfa4a89e788b6f583099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storeStayTime: 5
+  NavMeshAgentDelay: 2
 --- !u!65 &7671640666551700399
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3311,22 +3325,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2919823153202857021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4045326945149514471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3034922a91a1cfa4a89e788b6f583099, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  storeStayTime: 5
 --- !u!1 &4170553728616843588
 GameObject:
   m_ObjectHideFlags: 0
