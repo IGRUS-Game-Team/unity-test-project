@@ -26,7 +26,7 @@ public class PlayerObjectSetController : MonoBehaviour
     void Update()
     {
         heldObject = playerObjectHoldController.heldObject;
-
+        if (heldObject == null && input.set == true) input.SetInput(false);
         if (isHolding)
         {
 
@@ -34,7 +34,6 @@ public class PlayerObjectSetController : MonoBehaviour
         }
         else
         {
-
             HidePreview();
         }
 
@@ -46,6 +45,7 @@ public class PlayerObjectSetController : MonoBehaviour
             input.SetInput(false);
             HidePreview();
         }
+        else input.SetInput(false);
     }
 
     private void TurnOnPhysics(Rigidbody rb)

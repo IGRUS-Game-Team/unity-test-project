@@ -20,6 +20,7 @@ public class PlayerObjectDropController : MonoBehaviour
     {
         heldObject = playerObjectHoldController.heldObject;
 
+        if (heldObject == null && input.drop == true) input.DropInput(false);
         if (input.drop && isHolding)
         {
             Drop();
@@ -46,7 +47,7 @@ public class PlayerObjectDropController : MonoBehaviour
         TurnOnPhysics(rb);
 
         heldObject.isHeld = false;
-        heldObject = null;
+        playerObjectHoldController.heldObject = null;
         rb.AddForce(Camera.main.transform.forward * throwForce, ForceMode.Impulse);
 
     }
