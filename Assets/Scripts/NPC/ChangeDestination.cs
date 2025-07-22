@@ -10,10 +10,6 @@ public class ChangeDestination : MonoBehaviour
     [Header("NPC 퇴장 위치")]
     [SerializeField] Transform exitPoint;
 
-    [Header("선반에서 머무르는 시간")]
-    [SerializeField] float minStayTime = 3f;
-    [SerializeField] float maxStayTime = 7f;
-
     [Header("도착 판정 거리")]
     [SerializeField] float arrivalDistance = 0.2f;
 
@@ -38,9 +34,6 @@ public class ChangeDestination : MonoBehaviour
 
         while (agent.pathPending || agent.remainingDistance > arrivalDistance)
         yield return null;
-
-        float wait = Random.Range(minStayTime, maxStayTime);
-        yield return new WaitForSeconds(wait);
 
         mover.SetTarget(exitPoint);
     }
