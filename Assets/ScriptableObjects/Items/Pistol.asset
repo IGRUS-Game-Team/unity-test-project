@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b8ffd7ecded664aa79dc85fe2dd5ca, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  id: 
-  displayName: 
+  id: 1
+  displayName: air pistol
   icon: {fileID: 0}
-  unitPrice: 0
+  unitPrice: 3000

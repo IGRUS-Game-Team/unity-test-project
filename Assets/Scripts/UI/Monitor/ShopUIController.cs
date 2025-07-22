@@ -8,6 +8,7 @@ public class ShopUIController : MonoBehaviour
     [SerializeField] Transform contentRoot;          // ScrollView/Viewport/Content
     [SerializeField] ItemCardView itemCardPrefab;    // 프리팹
 
+    
     List<ItemCardView> spawnedCards = new();
 
     void Start()
