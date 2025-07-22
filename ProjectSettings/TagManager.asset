@@ -5,11 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - CinemachineTarget
-  - NonPas
   - Npc
   - Store
   - NonPass
   - SettableSurface
+  - NPC
   layers:
   - Default
   - TransparentFX
