@@ -6,6 +6,8 @@ public class PlayerPickUpController : MonoBehaviour
 {
     private RaycastHit hit;
     private List<BlockOutLiner> allBlocks = new List<BlockOutLiner>();
+    [SerializeField] public float pickupRange = 5f;
+    [SerializeField] public LayerMask pickupLayer;
 
     void Start()
     {
@@ -30,7 +32,7 @@ public class PlayerPickUpController : MonoBehaviour
         }
 
         
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, pickupRange, pickupLayer))
         {
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue);
 
