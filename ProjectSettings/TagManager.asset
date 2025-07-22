@@ -10,6 +10,7 @@ TagManager:
   - NonPass
   - SettableSurface
   - NPC
+  - Box
   layers:
   - Default
   - TransparentFX
