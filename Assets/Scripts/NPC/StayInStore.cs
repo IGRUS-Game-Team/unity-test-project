@@ -8,6 +8,9 @@ public class StayInStore : MonoBehaviour
     [SerializeField] float NavMeshAgentDelay = 2f;
 
     const string ARRIVED_SHELF_STRING = "Arrived Shelf";
+    const string STANDING_STRING = "Standing";
+    const string PICKUP_ANIMATION_STRING = "Picking Up Object";
+    const string WALKING_STRING = "Walking";
 
     NavMeshAgent agent;
     Animator animator;
@@ -36,13 +39,13 @@ public class StayInStore : MonoBehaviour
     IEnumerator StayInStoreRoutine()
     {
         agent.isStopped = true;
-        animator.Play("Standing", 0, 0f);
+        animator.Play(STANDING_STRING, 0, 0f);
         yield return new WaitForSeconds(storeStayTime);
-        animator.Play("Picking Up Object", 0, 0f);
+        animator.Play(PICKUP_ANIMATION_STRING, 0, 0f);
         agent.isStopped = false;
         yield return new WaitForSeconds(NavMeshAgentDelay);
 
-        animator.Play("Walking", 0, 0f);
+        animator.Play(WALKING_STRING, 0, 0f);
     }
     
 }
