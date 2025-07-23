@@ -284,6 +284,37 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &79470086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 79470087}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &79470087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79470086}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.37000275, y: 11.92, z: 0.15307617}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &95116313
 Mesh:
   m_ObjectHideFlags: 0
@@ -5061,6 +5092,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 475415243617400241, guid: 5902e6804ea9fc847b232eac8f155bbf, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475415243617400241, guid: 5902e6804ea9fc847b232eac8f155bbf, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 475415243617400241, guid: 5902e6804ea9fc847b232eac8f155bbf, type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionId
+      value: 5ca35594-c1b0-4733-8663-13c1cca96de1
+      objectReference: {fileID: 0}
+    - target: {fileID: 475415243617400241, guid: 5902e6804ea9fc847b232eac8f155bbf, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionId
+      value: 470018e9-054e-4ff2-a515-d92dc6b3ef7e
+      objectReference: {fileID: 0}
+    - target: {fileID: 475415243617400241, guid: 5902e6804ea9fc847b232eac8f155bbf, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_ActionId
+      value: 4931d909-a953-4a7c-a7f5-03ad69742a99
+      objectReference: {fileID: 0}
+    - target: {fileID: 475415243617400241, guid: 5902e6804ea9fc847b232eac8f155bbf, type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionName
+      value: 'Player/Hold[/Mouse/leftButton]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 475415243617400241, guid: 5902e6804ea9fc847b232eac8f155bbf, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionName
+      value: 'Player/Drop[/Keyboard/r]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 475415243617400241, guid: 5902e6804ea9fc847b232eac8f155bbf, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_ActionName
+      value: 'Player/Set[/Keyboard/g]'
+      objectReference: {fileID: 0}
     - target: {fileID: 606675245379597028, guid: 5902e6804ea9fc847b232eac8f155bbf, type: 3}
       propertyPath: previewRed
       value: 
@@ -5132,3 +5195,4 @@ SceneRoots:
   - {fileID: 553759298}
   - {fileID: 1198758004}
   - {fileID: 316987359}
+  - {fileID: 79470087}

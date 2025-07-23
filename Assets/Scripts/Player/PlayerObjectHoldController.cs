@@ -11,25 +11,23 @@ public class PlayerObjectHoldController : MonoBehaviour
     [SerializeField] LayerMask pickupLayer;
 
     PlayerPickUpController playerPickUpController;
+    PlayerObjectDropController playerObjectDropController;
+    PlayerObjectSetController playerObjectSetController;
 
-    private StarterAssetsInputs input;
+
     public BlockIsHolding heldObject;
     private bool isHolding => heldObject != null;
     void Awake()
     {
-        input = GetComponent<StarterAssetsInputs>();
         playerPickUpController = GetComponent<PlayerPickUpController>();
+        playerObjectDropController = GetComponent<PlayerObjectDropController>();
+        playerObjectSetController = GetComponent<PlayerObjectSetController>();
         pickupRange = playerPickUpController.pickupRange;
         pickupLayer = playerPickUpController.pickupLayer;
     }
-
-    void Update()
+    void Start()
     {
-        if (input.hold && !isHolding)
-        {
-            TryPickup();
-            input.HoldInput(false);
-        }
+        InterActionController.Instance.OnClick += TryPickup;
     }
 
     private void TryPickup()
@@ -40,8 +38,9 @@ public class PlayerObjectHoldController : MonoBehaviour
             var target = hit.collider.GetComponent<BlockIsHolding>();
             if (target == null || target.isHeld) return;
 
-            heldObject = target;
-            heldObject.isHeld = true;
+            // heldObject = target;
+            // heldObject.isHeld = true;
+            SetHeldObject(target);
             heldObject.originalParent = target.transform.parent; // 원래 부모 기억
 
             var rb = heldObject.GetComponent<Rigidbody>();
@@ -68,5 +67,12 @@ public class PlayerObjectHoldController : MonoBehaviour
                 heldObject = null;
             }
     }
-
+    public void SetHeldObject(BlockIsHolding target)
+    {
+        heldObject = target;
+        heldObject.isHeld = true;
+        playerObjectDropController.heldObject = target;
+        playerObjectSetController.heldObject = target;
+        
+    }
 }

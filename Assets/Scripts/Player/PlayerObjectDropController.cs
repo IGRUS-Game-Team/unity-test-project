@@ -6,35 +6,39 @@ public class PlayerObjectDropController : MonoBehaviour
 {
     [SerializeField] float throwForce = 10f;
     PlayerObjectHoldController playerObjectHoldController;
-    private StarterAssetsInputs input;
-    private BlockIsHolding heldObject;
+
+    public BlockIsHolding heldObject;
     private bool isHolding => heldObject != null;
 
     void Awake()
     {
-        input = GetComponent<StarterAssetsInputs>();
+
         playerObjectHoldController = GetComponent<PlayerObjectHoldController>();
     }
-
-    void Update()
+    void Start()
     {
-        heldObject = playerObjectHoldController.heldObject;
-
-        if (heldObject == null && input.drop == true) input.DropInput(false);
-        if (input.drop && isHolding)
-        {
-            Drop();
-            input.DropInput(false);
-        }
-
+        InterActionController.Instance.OnThrowBox += Drop;
     }
+
+    // void Update()
+    // {
+    //     heldObject = playerObjectHoldController.heldObject;
+
+    //     if (heldObject == null && input.drop == true) input.DropInput(false);
+    //     if (input.drop && isHolding)
+    //     {
+    //         Drop();
+    //         input.DropInput(false);
+    //     }
+
+    // }
 
     private void Drop()
     {
-
+        Debug.Log("던지기");
         if (heldObject == null)
         {
-            Debug.Log("좇까");
+            Debug.Log("아왜안됨");
             return;
         }
 

@@ -40,7 +40,6 @@ public class PlayerPickUpController : MonoBehaviour
             if (block != null)
             {
                 block.selected = true; 
-                Debug.Log(block.name);
             }
         }
     }
