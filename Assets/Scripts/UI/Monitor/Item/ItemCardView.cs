@@ -28,8 +28,8 @@ public class ItemCardView : MonoBehaviour
             this.amount = amount;
         }
     }
-    public event EventHandler<AddToCartEventArgs> onAddToCart;
-
+    //public event EventHandler<AddToCartEventArgs> onAddToCart;
+    public Action<ItemData, int> onAddToCart;
     public void Setup(ItemData item)
     {
         data = item;
@@ -40,7 +40,8 @@ public class ItemCardView : MonoBehaviour
 
         plusBtn.onClick.AddListener(() => ChangeAmount(1));
         minusBtn.onClick.AddListener(() => ChangeAmount(-1));
-        addBtn.onClick.AddListener(() => onAddToCart?.Invoke(this, new AddToCartEventArgs(data, amount)));
+        //addBtn.onClick.AddListener(() => onAddToCart?.Invoke(this, new AddToCartEventArgs(data, amount)));
+        addBtn.onClick.AddListener(() => onAddToCart?.Invoke(data, amount));
     }
 
     void ChangeAmount(int delta)
