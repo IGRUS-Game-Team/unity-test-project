@@ -19,7 +19,6 @@ public class RenderTextureUIClicker : MonoBehaviour
         {
             Debug.Log("안눌림");
             return;
-
         }
         Debug.Log("병신");
         Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
