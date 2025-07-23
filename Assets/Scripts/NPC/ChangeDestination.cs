@@ -9,7 +9,6 @@ public class ChangeDestination : MonoBehaviour
 
     [Header("NPC 퇴장 위치")]
     [SerializeField] Transform exitPoint;
-
     [Header("선반에서 머무르는 시간")]
     [SerializeField] float minStayTime = 3f;
     [SerializeField] float maxStayTime = 7f;
