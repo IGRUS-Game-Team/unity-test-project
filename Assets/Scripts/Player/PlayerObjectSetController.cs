@@ -98,6 +98,7 @@ public class PlayerObjectSetController : MonoBehaviour
 
     void PlaceObject()
     {
+        if (heldObject == null) return;
         Debug.Log("a~~~~~~~~~~~~~~~~~~~~~~");
         Vector3 attribute = new Vector3(0, 0.5f, 0);
         Quaternion quaternion = Quaternion.identity;
