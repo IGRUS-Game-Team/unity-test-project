@@ -1,7 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+public enum InteractionType
+{
+    None,
+    Box,
+    Monitor,
+    Kiosk
+}
 public class PlayerPickUpController : MonoBehaviour
 {
     private RaycastHit hit;
@@ -31,7 +37,7 @@ public class PlayerPickUpController : MonoBehaviour
             block.selected = false; 
         }
 
-        
+
         if (Physics.Raycast(ray, out hit, pickupRange, pickupLayer))
         {
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue);
@@ -39,7 +45,7 @@ public class PlayerPickUpController : MonoBehaviour
             BlockOutLiner block = hit.transform.GetComponent<BlockOutLiner>();
             if (block != null)
             {
-                block.selected = true; 
+                block.selected = true;
             }
         }
     }

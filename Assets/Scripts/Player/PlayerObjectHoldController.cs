@@ -10,7 +10,7 @@ public class PlayerObjectHoldController : MonoBehaviour
     [SerializeField] float pickupRange;
     [SerializeField] LayerMask pickupLayer;
 
-    PlayerPickUpController playerPickUpController;
+    SelectionManager selectionManager;
     PlayerObjectDropController playerObjectDropController;
     PlayerObjectSetController playerObjectSetController;
 
@@ -19,11 +19,11 @@ public class PlayerObjectHoldController : MonoBehaviour
     private bool isHolding => heldObject != null;
     void Awake()
     {
-        playerPickUpController = GetComponent<PlayerPickUpController>();
+        selectionManager = GetComponent<SelectionManager>();
         playerObjectDropController = GetComponent<PlayerObjectDropController>();
         playerObjectSetController = GetComponent<PlayerObjectSetController>();
-        pickupRange = playerPickUpController.pickupRange;
-        pickupLayer = playerPickUpController.pickupLayer;
+        pickupRange = selectionManager.pickupRange;
+        pickupLayer = selectionManager.pickupLayer;
     }
     void Start()
     {
@@ -35,7 +35,7 @@ public class PlayerObjectHoldController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, pickupLayer))
         {
-            var target = hit.collider.GetComponent<BlockIsHolding>();
+            var target = hit.collider.GetComponentInParent<BlockIsHolding>();
             if (target == null || target.isHeld) return;
 
             // heldObject = target;
@@ -47,9 +47,14 @@ public class PlayerObjectHoldController : MonoBehaviour
             TurnOffPhysics(rb);
 
             heldObject.GetComponent<Collider>().enabled = false;
-            heldObject.transform.SetParent(holdPoint);
-            heldObject.transform.localPosition = Vector3.zero;
-            heldObject.transform.localRotation = Quaternion.identity;
+            // heldObject.transform.SetParent(holdPoint);
+            // heldObject.transform.localPosition = Vector3.zero;
+            // heldObject.transform.localRotation = Quaternion.identity;
+            GameObject rootObj = heldObject.transform.gameObject;
+            rootObj.transform.SetParent(holdPoint);
+            rootObj.transform.localPosition = Vector3.zero;
+            rootObj.transform.localRotation = Quaternion.identity;
+            // 하위 계층에 있는 모델을 옮기는 구조가 아니라 전체 계층을 전부 이동시키기 위해 로직 변경
         }
     }
 
