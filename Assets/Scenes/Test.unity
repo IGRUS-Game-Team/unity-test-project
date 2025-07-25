@@ -295,6 +295,7 @@ GameObject:
   - component: {fileID: 6968072}
   - component: {fileID: 6968075}
   - component: {fileID: 6968074}
+  - component: {fileID: 6968076}
   m_Layer: 3
   m_Name: Monitor
   m_TagString: Monitor
@@ -370,6 +371,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6968071}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &6968076
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6968071}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000004, y: 1.0000004, z: 0.9999998}
+  m_Center: {x: 0, y: 0, z: 0.00000047683716}
 --- !u!1 &79470086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1350,6 +1372,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &169790616 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2356912925370081413, guid: af07e1cc69506be4eb1db78ac8f7c6ab, type: 3}
+  m_PrefabInstance: {fileID: 922926510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e65050300a5624faea1c0f5a047f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &259131095
 Mesh:
   m_ObjectHideFlags: 0
@@ -1515,6 +1548,50 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &280323635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 280323637}
+  - component: {fileID: 280323636}
+  m_Layer: 0
+  m_Name: InputRouter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &280323636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280323635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a43429a52f8e249a7088c4e87f130f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &280323637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280323635}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.993044, y: 2.9717205, z: 9.823118}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &283403420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1802,19 +1879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 1827799306}
   monitorCam: {fileID: 1323936370}
-  uiClicker: {fileID: 0}
---- !u!114 &323704229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 323704203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6438fe6521be74f4ebad0e9536db296f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  uiClicker: {fileID: 169790616}
 --- !u!43 &331353676
 Mesh:
   m_ObjectHideFlags: 0
@@ -4619,9 +4684,6 @@ PrefabInstance:
       addedObject: {fileID: 323704220}
     - targetCorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 323704229}
-    - targetCorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 323704228}
   m_SourcePrefab: {fileID: 100100000, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
 --- !u!43 &1255763141
@@ -4909,7 +4971,7 @@ GameObject:
   - component: {fileID: 1323936370}
   - component: {fileID: 1323936369}
   - component: {fileID: 1323936368}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MonitorCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5378,7 +5440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 646725669212121388, guid: 914e6db196938e449a00a9c61e355508, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0008883949
+      value: -0.000097438104
       objectReference: {fileID: 0}
     - target: {fileID: 1045883293807470306, guid: 914e6db196938e449a00a9c61e355508, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6478,3 +6540,4 @@ SceneRoots:
   - {fileID: 1552561011}
   - {fileID: 922926510}
   - {fileID: 2072361813}
+  - {fileID: 280323637}
