@@ -32,12 +32,15 @@ public class PlayerObjectHoldController : MonoBehaviour
 
     private void TryPickup()
     {
+        
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, pickupLayer))
         {
             var target = hit.collider.GetComponentInParent<BlockIsHolding>();
             if (target == null || target.isHeld) return;
-
+            //테스트코드
+            string tag = hit.collider.transform.root.tag;
+            if (tag != "Box") return;
             // heldObject = target;
             // heldObject.isHeld = true;
             SetHeldObject(target);

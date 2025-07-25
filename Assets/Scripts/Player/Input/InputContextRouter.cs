@@ -7,6 +7,7 @@ public class InputContextRouter : MonoBehaviour
 {
     private void Start()
     {
+        Debug.Log("InputContextRouter 활성화됨");
         InterActionController.Instance.OnClick += HandleInteract;
     }
 

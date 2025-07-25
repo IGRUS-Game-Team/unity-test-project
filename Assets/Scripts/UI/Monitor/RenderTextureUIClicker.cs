@@ -17,7 +17,6 @@ public class RenderTextureUIClicker : MonoBehaviour
     {
         if (!Input.GetMouseButtonDown(0))
         {
-            Debug.Log("안눌림");
             return;
         }
         Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
@@ -46,7 +45,7 @@ public class RenderTextureUIClicker : MonoBehaviour
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(
             monitorCam,
             monitorCanvasRt.TransformPoint(local));
-
+        Debug.Log(screenPos);
         // 3. GraphicRaycaster로 클릭 전달
         PointerEventData ped = new PointerEventData(eventSystem) { position = screenPos };
         var results = new List<RaycastResult>();
