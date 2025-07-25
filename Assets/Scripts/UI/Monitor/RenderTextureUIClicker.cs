@@ -17,10 +17,10 @@ public class RenderTextureUIClicker : MonoBehaviour
     {
         if (!Input.GetMouseButtonDown(0))
         {
-            Debug.Log("안눌림");
             return;
         }
         Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f);
         if (!Physics.Raycast(ray, out RaycastHit hit))
         {
             Debug.Log("No Physics Hit");
@@ -31,10 +31,10 @@ public class RenderTextureUIClicker : MonoBehaviour
             Debug.Log("Hit something else: " + hit.collider.name);
             return;
         }
-
+        Debug.Log("도달");
         // 1. UV 좌표 얻기 (0~1)
         Vector2 uv = hit.textureCoord;
-
+        Debug.Log(uv);
 
         // 2. UV -> Canvas 스크린좌표로 변환
         Vector2 canvasSize = monitorCanvasRt.sizeDelta;
@@ -46,13 +46,16 @@ public class RenderTextureUIClicker : MonoBehaviour
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(
             monitorCam,
             monitorCanvasRt.TransformPoint(local));
-
+        Debug.Log(screenPos);
         // 3. GraphicRaycaster로 클릭 전달
         PointerEventData ped = new PointerEventData(eventSystem) { position = screenPos };
         var results = new List<RaycastResult>();
         uiRaycaster.Raycast(ped, results);
         foreach (var r in results)
+        {
             ExecuteEvents.Execute(r.gameObject, ped, ExecuteEvents.pointerClickHandler);
+            Debug.Log("아왜안됨");
+        }
     }
 
 

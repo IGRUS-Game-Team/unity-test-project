@@ -17,6 +17,8 @@ public class BoxSpawner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("트리거 닿음" + other.tag);
+
         if (other.CompareTag(PLAYER))
         {
             BoxDrop();
@@ -25,6 +27,7 @@ public class BoxSpawner : MonoBehaviour
 
     private void BoxDrop()
     {
+        Debug.Log("소환.");
         randomDropRange = Random.Range(0f,3f);
         spawnPoint = new Vector3(currentPosition.x+randomDropRange, currentPosition.y+spawnHeight, currentPosition.z);
         Instantiate(deilveryBox, spawnPoint, Quaternion.identity);
