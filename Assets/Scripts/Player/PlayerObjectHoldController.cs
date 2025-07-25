@@ -9,6 +9,7 @@ public class PlayerObjectHoldController : MonoBehaviour
     [SerializeField] Transform holdPoint;
     [SerializeField] float pickupRange;
     [SerializeField] LayerMask pickupLayer;
+    [SerializeField] Camera PlayerCam;
 
     SelectionManager selectionManager;
     PlayerObjectDropController playerObjectDropController;
@@ -33,7 +34,7 @@ public class PlayerObjectHoldController : MonoBehaviour
     private void TryPickup()
     {
         
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = PlayerCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, pickupLayer))
         {
             var target = hit.collider.GetComponentInParent<BlockIsHolding>();

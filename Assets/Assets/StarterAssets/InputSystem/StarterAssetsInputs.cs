@@ -7,6 +7,7 @@ namespace StarterAssets
 {
 	public class StarterAssetsInputs : MonoBehaviour
 	{
+		
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
@@ -32,10 +33,14 @@ namespace StarterAssets
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if(cursorInputForLook && !UIModeState.IsInUIMode)
 			{
 				LookInput(value.Get<Vector2>());
 			}
+			// if(cursorInputForLook)
+			// {
+			// 	LookInput(value.Get<Vector2>());
+			// }
 		}
 
 		public void OnJump(InputValue value)
@@ -101,6 +106,7 @@ namespace StarterAssets
 		
 		private void OnApplicationFocus(bool hasFocus)
 		{
+			if (UIModeState.IsInUIMode) return;
 			SetCursorState(cursorLocked);
 		}
 

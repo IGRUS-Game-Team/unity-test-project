@@ -7,7 +7,7 @@ public class MonitorInteractionManager : MonoBehaviour
     [SerializeField] Camera playerCam;
     [SerializeField] Camera monitorCam;
     [SerializeField] RenderTextureUIClicker uiClicker;
-
+    [SerializeField] Collider monitorCollider;  
     private bool isUIActive = false;
 
     private void Awake()
@@ -18,10 +18,11 @@ public class MonitorInteractionManager : MonoBehaviour
     public void Interact()
     {
         if (isUIActive) return;
-
         isUIActive = true;
-        Debug.Log("모니터 UI 진입");
 
+        Debug.Log("모니터 UI 진입");
+        UIModeState.IsInUIMode = true;
+        monitorCollider.enabled = false;
         playerCam.gameObject.SetActive(false);
         monitorCam.gameObject.SetActive(true);
         uiClicker.enabled = true;
@@ -34,6 +35,8 @@ public class MonitorInteractionManager : MonoBehaviour
     public void ExitUI()
     {
         isUIActive = false;
+
+        monitorCollider.enabled = true;
         playerCam.gameObject.SetActive(true);
         monitorCam.gameObject.SetActive(false);
         uiClicker.enabled = false;
