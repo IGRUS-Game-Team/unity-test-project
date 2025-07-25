@@ -15,7 +15,7 @@ public class RaycastDetector : MonoBehaviour
         HitObject = null;
 
         if (Camera.main == null) return;
-
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, range, layer))
         {
