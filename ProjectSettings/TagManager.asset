@@ -10,11 +10,14 @@ TagManager:
   - NonPass
   - SettableSurface
   - NPC
+  - Box
+  - Monitor
+  - Kiosk
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Box
+  - Interactable
   - Water
   - UI
   - Pass

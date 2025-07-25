@@ -7,41 +7,63 @@ public class InputContextRouter : MonoBehaviour
 {
     private void Start()
     {
-        //InterActionController.Instance.OnClick += HandleInteract;
+        InterActionController.Instance.OnClick += HandleInteract;
     }
 
-    // void Update()
-    // {
-
-    //     if (hit != null && hit.CompareTag("Box"))
-    //     {
-    //         BoxInteractionManager.Instace.Activate();
-    //     }
-    //     else
-    //     {
-    //         BoxInteractionManager.Instace.Deactivate();
-    //     }
-
-    //     // 다른 대상들 (모니터, 키오스크 등)도 여기에 추가 가능
-    // }
 
     private void HandleInteract()
     {
-        if (BoxInteractionManager.Instace.IsActive)
+        GameObject hitObj = RaycastDetector.Instance.HitObject;
+        if (hitObj == null)
         {
-            //BoxInteractionManager.Instace.Interact();
+            Debug.Log("히트된 오브젝트 없음");
+            return;
         }
-        else if (MonitorInteractionManager.Instace.IsActive)
+        string tag = hitObj.tag;
+
+        switch (tag)
         {
-            //MonitorInteractionManager.Instace.Interact();
+            case "Box":
+                if (BoxInteractionManager.Instance != null)
+                {
+                    BoxInteractionManager.Instance.Activate();
+                    BoxInteractionManager.Instance.Interact();
+                }
+                break;
+
+            case "Monitor":
+                if (MonitorInteractionManager.Instance != null)
+                {
+                    Debug.Log("hi");
+                    MonitorInteractionManager.Instance.Interact();
+                }
+                break;
+
+            // case "Kiosk":
+            //     if (KioskInteractionManager.Instance != null)
+            //     {
+            //         //KioskInteractionManager.Instance.Interact();
+            //     }
+            //     break;
+            default:
+                Debug.Log($"상호작용 가능한 태그가 아님: {tag}");
+                break;
         }
-        else if (KioskInteractionManager.Instace.IsActive)
-        {
-            //KioskInteractionManager.Instace.Interact();
-        }
-        else
-        {
-            Debug.Log("상호작용 대상이 없음");
-        }
+        // if (BoxInteractionManager.Instace.IsActive)
+        // {
+        //     //BoxInteractionManager.Instace.Interact();
+        // }
+        // else if (MonitorInteractionManager.Instace.IsActive)
+        // {
+        //     //MonitorInteractionManager.Instace.Interact();
+        // }
+        // else if (KioskInteractionManager.Instace.IsActive)
+        // {
+        //     //KioskInteractionManager.Instace.Interact();
+        // }
+        // else
+        // {
+        //     Debug.Log("상호작용 대상이 없음");
+        // }
     }
 }

@@ -18,8 +18,8 @@ public class SelectionManager : MonoBehaviour
         {
             block.selected = false;
         }
-
-        var obj = RaycastDetector.Instance.HitObject;
+        
+        GameObject obj = RaycastDetector.Instance.HitObject;
         if (obj == null) return;
 
         BlockOutLiner hitBlock = obj.GetComponent<BlockOutLiner>();

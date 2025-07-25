@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class BoxInteractionManager : MonoBehaviour
 {
-    public static BoxInteractionManager Instace { get; private set; }
+    public static BoxInteractionManager Instance { get; private set; }
 
     public bool IsActive => isBoxInteractionManagerPlaying;
     private bool isBoxInteractionManagerPlaying;
 
     private void Awake()
     {
-        Instace = this;
+        Instance = this;
     }
 
     public void Activate()
