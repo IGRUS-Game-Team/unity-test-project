@@ -33,7 +33,6 @@ public class BoxInteractionManager : MonoBehaviour
     public void Interact()
     {
         if (!isBoxInteractionManagerPlaying) return;
-        // 예: 애니메이션 재생, 아이템 지급 등
         Deactivate();
     }
 

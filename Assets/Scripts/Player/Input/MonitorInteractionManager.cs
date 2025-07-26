@@ -35,7 +35,7 @@ public class MonitorInteractionManager : MonoBehaviour
     public void ExitUI()
     {
         isUIActive = false;
-
+        UIModeState.IsInUIMode = false; 
         monitorCollider.enabled = true;
         playerCam.gameObject.SetActive(true);
         monitorCam.gameObject.SetActive(false);
