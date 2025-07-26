@@ -449,6 +449,10 @@ PrefabInstance:
       propertyPath: deilveryBox
       value: 
       objectReference: {fileID: 8653563848095977024, guid: 70a92a450daaa404287e98909d48c224, type: 3}
+    - target: {fileID: 1016676729891634548, guid: c840dbb1dedc9b94f95c565257882d1c, type: 3}
+      propertyPath: selectionManager
+      value: 
+      objectReference: {fileID: 323704221}
     - target: {fileID: 2608400414216993430, guid: c840dbb1dedc9b94f95c565257882d1c, type: 3}
       propertyPath: m_Name
       value: Box Spawn Step
@@ -1900,6 +1904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feaaf6703a9980d47ad30cc05900a358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allBlocks: []
   pickupRange: 5
   pickupLayer:
     serializedVersion: 2
@@ -5397,7 +5402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 646725669212121388, guid: 914e6db196938e449a00a9c61e355508, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000059807306
+      value: -0.00004269168
       objectReference: {fileID: 0}
     - target: {fileID: 1045883293807470306, guid: 914e6db196938e449a00a9c61e355508, type: 3}
       propertyPath: m_AnchorMax.y
