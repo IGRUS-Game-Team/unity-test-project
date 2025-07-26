@@ -5,14 +5,13 @@ TagManager:
   serializedVersion: 3
   tags:
   - CinemachineTarget
-  - Npc
-  - Store
-  - NonPass
   - SettableSurface
   - NPC
   - Box
   - Monitor
   - Kiosk
+  - Pass
+  - Arrived Shelf
   layers:
   - Default
   - TransparentFX
