@@ -8,13 +8,15 @@ TagManager:
   - SettableSurface
   - NPC
   - Box
+  - Monitor
+  - Kiosk
   - Pass
   - Arrived Shelf
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Box
+  - Interactable
   - Water
   - UI
   - Pass

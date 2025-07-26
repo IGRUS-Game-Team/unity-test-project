@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using StarterAssets;
 using System;
 
 public class PlayerObjectSetController : MonoBehaviour
@@ -10,8 +9,8 @@ public class PlayerObjectSetController : MonoBehaviour
     [SerializeField] float placeRange = 3f;
     [SerializeField] Transform holdPoint;
 
-    private StarterAssetsInputs input;
-    private BlockIsHolding heldObject;
+
+    public BlockIsHolding heldObject;
     PlayerObjectHoldController playerObjectHoldController;
     private bool isHolding => heldObject != null;
 
@@ -19,33 +18,50 @@ public class PlayerObjectSetController : MonoBehaviour
     private Vector3 previewTransform;
     void Awake()
     {
-        input = GetComponent<StarterAssetsInputs>();
         playerObjectHoldController = GetComponent<PlayerObjectHoldController>();
+
+    }
+    void Start()
+    {
+        InterActionController.Instance.OnDrop += PlaceObject;
     }
 
+    // void Update()
+    // {
+    //     heldObject = playerObjectHoldController.heldObject;
+    //     if (heldObject == null && input.set == true) input.SetInput(false);
+    //     if (isHolding)
+    //     {
+
+    //         ShowPlacementPreview();
+    //     }
+    //     else
+    //     {
+    //         HidePreview();
+    //     }
+
+
+    //     if (input.set && isHolding && canPlace)
+    //     {
+    //         Debug.Log("병신");
+    //         PlaceObject();
+    //         input.SetInput(false);
+    //         HidePreview();
+    //     }
+    //     else input.SetInput(false);
+    // }
     void Update()
     {
         heldObject = playerObjectHoldController.heldObject;
-        if (heldObject == null && input.set == true) input.SetInput(false);
+
         if (isHolding)
         {
-
             ShowPlacementPreview();
         }
         else
         {
             HidePreview();
         }
-
-
-        if (input.set && isHolding && canPlace)
-        {
-            Debug.Log("병신");
-            PlaceObject();
-            input.SetInput(false);
-            HidePreview();
-        }
-        else input.SetInput(false);
     }
 
     private void TurnOnPhysics(Rigidbody rb)
@@ -82,7 +98,11 @@ public class PlayerObjectSetController : MonoBehaviour
 
     void PlaceObject()
     {
-        Debug.Log("a~~~~~~~~~~~~~~~~~~~~~~");
+        if (heldObject == null || !canPlace)
+        {
+        Debug.Log("놓을 수 없는 위치입니다.");
+        return;
+        }
         Vector3 attribute = new Vector3(0, 0.5f, 0);
         Quaternion quaternion = Quaternion.identity;
         quaternion.eulerAngles = new Vector3(0, 0, 0);
