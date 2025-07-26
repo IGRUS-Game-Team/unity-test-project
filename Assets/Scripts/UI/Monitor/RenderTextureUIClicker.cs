@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// RenderTextureUIClicker.cs 박정민
+/// 클릭하면 ray를 모니터 render texture가 씌어진 cube로 쏨, cube에 맞은 좌표를 ui 상의 좌표로 변환 후
+/// 그 좌표에 있는 버튼의 이벤트를 실행시킴
+/// </summary>
 public class RenderTextureUIClicker : MonoBehaviour
 {
     [SerializeField] Camera playerCam;
