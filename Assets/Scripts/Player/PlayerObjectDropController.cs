@@ -18,6 +18,10 @@ public class PlayerObjectDropController : MonoBehaviour
     {
         InterActionController.Instance.OnThrowBox += Drop;
     }
+    void Update()
+    {
+        heldObject = playerObjectHoldController.heldObject;
+    }
 
     // void Update()
     // {
