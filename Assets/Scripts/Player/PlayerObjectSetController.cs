@@ -98,7 +98,11 @@ public class PlayerObjectSetController : MonoBehaviour
 
     void PlaceObject()
     {
-        if (heldObject == null) return;
+        if (heldObject == null || !canPlace)
+        {
+        Debug.Log("놓을 수 없는 위치입니다.");
+        return;
+        }
         Vector3 attribute = new Vector3(0, 0.5f, 0);
         Quaternion quaternion = Quaternion.identity;
         quaternion.eulerAngles = new Vector3(0, 0, 0);
