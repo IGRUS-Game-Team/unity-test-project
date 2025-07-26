@@ -33,7 +33,8 @@ public class PlayerObjectHoldController : MonoBehaviour
 
     private void TryPickup()
     {
-        
+        if (heldObject != null) return;
+
         Ray ray = PlayerCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, pickupLayer))
         {
