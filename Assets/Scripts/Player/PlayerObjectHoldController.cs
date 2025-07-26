@@ -9,48 +9,56 @@ public class PlayerObjectHoldController : MonoBehaviour
     [SerializeField] Transform holdPoint;
     [SerializeField] float pickupRange;
     [SerializeField] LayerMask pickupLayer;
+    [SerializeField] Camera PlayerCam;
 
-    PlayerPickUpController playerPickUpController;
+    SelectionManager selectionManager;
+    PlayerObjectDropController playerObjectDropController;
+    PlayerObjectSetController playerObjectSetController;
 
-    private StarterAssetsInputs input;
+
     public BlockIsHolding heldObject;
     private bool isHolding => heldObject != null;
     void Awake()
     {
-        input = GetComponent<StarterAssetsInputs>();
-        playerPickUpController = GetComponent<PlayerPickUpController>();
-        pickupRange = playerPickUpController.pickupRange;
-        pickupLayer = playerPickUpController.pickupLayer;
+        selectionManager = GetComponent<SelectionManager>();
+        playerObjectDropController = GetComponent<PlayerObjectDropController>();
+        playerObjectSetController = GetComponent<PlayerObjectSetController>();
+        pickupRange = selectionManager.pickupRange;
+        pickupLayer = selectionManager.pickupLayer;
     }
-
-    void Update()
+    void Start()
     {
-        if (input.hold && !isHolding)
-        {
-            TryPickup();
-            input.HoldInput(false);
-        }
+        InterActionController.Instance.OnClick += TryPickup;
     }
 
     private void TryPickup()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        
+        Ray ray = PlayerCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, pickupLayer))
         {
-            var target = hit.collider.GetComponent<BlockIsHolding>();
+            var target = hit.collider.GetComponentInParent<BlockIsHolding>();
             if (target == null || target.isHeld) return;
-
-            heldObject = target;
-            heldObject.isHeld = true;
+            //테스트코드
+            string tag = hit.collider.transform.root.tag;
+            if (tag != "Box") return;
+            // heldObject = target;
+            // heldObject.isHeld = true;
+            SetHeldObject(target);
             heldObject.originalParent = target.transform.parent; // 원래 부모 기억
 
             var rb = heldObject.GetComponent<Rigidbody>();
             TurnOffPhysics(rb);
 
             heldObject.GetComponent<Collider>().enabled = false;
-            heldObject.transform.SetParent(holdPoint);
-            heldObject.transform.localPosition = Vector3.zero;
-            heldObject.transform.localRotation = Quaternion.identity;
+            // heldObject.transform.SetParent(holdPoint);
+            // heldObject.transform.localPosition = Vector3.zero;
+            // heldObject.transform.localRotation = Quaternion.identity;
+            GameObject rootObj = heldObject.transform.gameObject;
+            rootObj.transform.SetParent(holdPoint);
+            rootObj.transform.localPosition = Vector3.zero;
+            rootObj.transform.localRotation = Quaternion.identity;
+            // 하위 계층에 있는 모델을 옮기는 구조가 아니라 전체 계층을 전부 이동시키기 위해 로직 변경
         }
     }
 
@@ -68,5 +76,12 @@ public class PlayerObjectHoldController : MonoBehaviour
                 heldObject = null;
             }
     }
-
+    public void SetHeldObject(BlockIsHolding target)
+    {
+        heldObject = target;
+        heldObject.isHeld = true;
+        playerObjectDropController.heldObject = target;
+        playerObjectSetController.heldObject = target;
+        
+    }
 }

@@ -1,0 +1,74 @@
+{
+    "name": "InteractionInput",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "978f2b5f-4672-43ce-87f5-02700e99e8dc",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "274c1383-a569-4973-9969-742b07b94229",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ThrowBox",
+                    "type": "Button",
+                    "id": "f0755d9c-dc35-4c22-9ef2-9c380d022741",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Drop",
+                    "type": "Button",
+                    "id": "cf73577a-5e71-4c00-aec0-ab8892eeccc7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "573f49b5-dada-4d5d-9f36-d2dd4a59dba8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8a5d5660-1111-41b0-a388-5653f431bef2",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrowBox",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aef9c227-633b-4637-bf14-61beb9e0d5ab",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
