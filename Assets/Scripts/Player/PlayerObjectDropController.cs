@@ -2,6 +2,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using StarterAssets;
 using System;
+
+//PlayerObjectDropController.cs 박정민
+//drop 키 (R) 눌렀을때 Hold된 오브젝트 던지는 역할 하는 클래스
+//Player에 붙인다.
+
 public class PlayerObjectDropController : MonoBehaviour
 {
     [SerializeField] float throwForce = 10f;
@@ -16,14 +21,14 @@ public class PlayerObjectDropController : MonoBehaviour
     }
     void Start()
     {
-        InterActionController.Instance.OnThrowBox += Drop;
+        InterActionController.Instance.OnThrowBox += Drop; //이벤트 구독
     }
     void Update()
     {
         heldObject = playerObjectHoldController.heldObject;
     }
 
-    // void Update()
+    // void Update() //예전 이벤트 구조 쓰기 전 방식
     // {
     //     heldObject = playerObjectHoldController.heldObject;
 

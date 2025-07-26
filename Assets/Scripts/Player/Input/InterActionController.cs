@@ -1,6 +1,10 @@
 using System;
 using UnityEngine;
 
+// InputActionController.cs 박정민
+// starter1인칭 에셋과 따로 인풋액션맵을 만들어서 키매핑시킴.
+// unityEventInvoked로 작동함.
+// Click : 좌클릭. ThrowBox : R, Drop(Set) : G
 public class InterActionController : MonoBehaviour
 {
     public static InterActionController Instance { get; private set; }
@@ -25,7 +29,7 @@ public class InterActionController : MonoBehaviour
         inputActions.Player.ThrowBox.performed += ctx => OnThrowBox?.Invoke();
         inputActions.Player.Drop.performed += ctx => OnDrop?.Invoke();
     }
-    
+
     private void OnDestroy()
     {
         inputActions.Player.Click.performed -= ctx => OnClick?.Invoke();
