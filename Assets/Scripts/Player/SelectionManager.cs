@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SelectionManager : MonoBehaviour
 {
-    private List<BlockOutLiner> allBlocks = new List<BlockOutLiner>();
+    public List<BlockOutLiner> allBlocks = new List<BlockOutLiner>();
     [SerializeField] public float pickupRange = 5f;
     [SerializeField] public LayerMask pickupLayer;
     void Start()
