@@ -8,10 +8,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 688011773136789523, guid: b86949561eeb7324a9bdd8fa5754b2fa, type: 3}
-      propertyPath: m_Speed
-      value: 3.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2948872332297630002, guid: b86949561eeb7324a9bdd8fa5754b2fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -56,7 +52,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Npc 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2208162930652028198, guid: b86949561eeb7324a9bdd8fa5754b2fa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
