@@ -21,14 +21,18 @@ public class NpcState_ToShelf : IState
         if (!arrived) return;
 
         _npc.Agent.updateRotation = false;              // 에이전트 자동 회전 끔
-        Vector3 dir = _npc.TargetShelfSlot.position - _npc.transform.position;
-        dir.y = 0;                                      // 위아래 방향 제거
-        if (dir != Vector3.zero)
-            _npc.transform.rotation = Quaternion.LookRotation(dir);
+
+        Vector3 lookdir = -_npc.TargetShelfSlot.forward;
+        lookdir.y = 0f;                                      // 위아래 방향 제거
+
+        if (lookdir != Vector3.zero)
+        {
+            _npc.transform.rotation = Quaternion.LookRotation(lookdir); 
+        }
 
         _npc.Agent.isStopped = true;      // ← 도착 후 즉시 정지
         _npc.SM.SetState(new NpcState_PickWait(_npc));
     }
 
-    public void Exit() { _npc.Agent.updateRotation = true; }
+    public void Exit() { }
 }
