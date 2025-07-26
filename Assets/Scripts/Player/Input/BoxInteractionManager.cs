@@ -1,5 +1,8 @@
 using UnityEngine;
 
+//BoxInteractionManager.cs 박정민
+//박스는 디폴트 동작이라 들어가도 별거 없음
+//미구현
 public class BoxInteractionManager : MonoBehaviour
 {
     public static BoxInteractionManager Instance { get; private set; }
