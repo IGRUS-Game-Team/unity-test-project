@@ -95,7 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa32bdf7b2e4fe244a9238bddbf61b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deilveryBox: {fileID: 8261288864389129648, guid: e04f6f795750a9d409b5cd1d4d5859de, type: 3}
+  deilveryBox: {fileID: 8653563848095977024, guid: 70a92a450daaa404287e98909d48c224, type: 3}
+  selectionManager: {fileID: 0}
 --- !u!1 &5237562480910808265
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +125,7 @@ Transform:
   m_GameObject: {fileID: 5237562480910808265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.197, z: 0}
   m_LocalScale: {x: 1, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -195,7 +196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa32bdf7b2e4fe244a9238bddbf61b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deilveryBox: {fileID: 0}
+  deilveryBox: {fileID: 8653563848095977024, guid: 70a92a450daaa404287e98909d48c224, type: 3}
+  selectionManager: {fileID: 0}
 --- !u!1 &7138221982981590235
 GameObject:
   m_ObjectHideFlags: 0
