@@ -11,8 +11,8 @@ using UnityEngine.UI;
 /// </summary>
 public class RenderTextureUIClicker : MonoBehaviour
 {
-    [SerializeField] Camera playerCam;
-    [SerializeField] Camera monitorCam;             // UI를 찍는 카메라
+    [SerializeField] Camera MonitorCam;
+    [SerializeField] Camera KioskCam;             // UI를 찍는 카메라
     [SerializeField] RectTransform monitorCanvasRt; // UI Canvas RectTransform
     [SerializeField] Renderer monitorScreen;        // RenderTexture 붙은 Mesh
     [SerializeField] GraphicRaycaster uiRaycaster;
@@ -24,7 +24,7 @@ public class RenderTextureUIClicker : MonoBehaviour
         {
             return;
         }
-        Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = MonitorCam.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f);
         if (!Physics.Raycast(ray, out RaycastHit hit))
         {
@@ -49,7 +49,7 @@ public class RenderTextureUIClicker : MonoBehaviour
 
 
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(
-            monitorCam,
+            KioskCam,
             monitorCanvasRt.TransformPoint(local));
         Debug.Log(screenPos);
         // 3. GraphicRaycaster로 클릭 전달
