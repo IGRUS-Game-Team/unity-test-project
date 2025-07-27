@@ -36,6 +36,7 @@ public class ItemCardView : MonoBehaviour
     void Awake()
     {
         //onAddToCart += Test_OnSpacePressed; <-  잘못된 방식
+        
         onAddToCart.AddListener(Test_OnSpacePressed);
     }
     public void Setup(ItemData item)
