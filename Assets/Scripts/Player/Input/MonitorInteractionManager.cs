@@ -1,5 +1,8 @@
 using UnityEngine;
 
+
+//모니터를 클릭시 Hold 가 아닌 모니터와 상호작용 할 수 있도록 함.
+//모니터 root에 붙임
 public class MonitorInteractionManager : MonoBehaviour
 {
     public static MonitorInteractionManager Instance { get; private set; }
@@ -7,7 +10,7 @@ public class MonitorInteractionManager : MonoBehaviour
     [SerializeField] Camera playerCam;
     [SerializeField] Camera monitorCam;
     [SerializeField] RenderTextureUIClicker uiClicker;
-    [SerializeField] Collider monitorCollider;  
+    [SerializeField] Collider monitorCollider;
     private bool isUIActive = false;
 
     private void Awake()
@@ -35,7 +38,7 @@ public class MonitorInteractionManager : MonoBehaviour
     public void ExitUI()
     {
         isUIActive = false;
-        UIModeState.IsInUIMode = false; 
+        UIModeState.IsInUIMode = false;
         monitorCollider.enabled = true;
         playerCam.gameObject.SetActive(true);
         monitorCam.gameObject.SetActive(false);

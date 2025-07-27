@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ShopUIController.cs 박정민
+/// 아이템의 DB 가져와서 DB의 있는 아이템 수 만큼 아이템 카드 복사해서 ScrollView에 넣는 클래스
+/// </summary>
 public class ShopUIController : MonoBehaviour
 {
     [Header("Refs")]
@@ -8,7 +12,7 @@ public class ShopUIController : MonoBehaviour
     [SerializeField] Transform contentRoot;          // ScrollView/Viewport/Content
     [SerializeField] ItemCardView itemCardPrefab;    // 프리팹
 
-    
+
     List<ItemCardView> spawnedCards = new();
 
     void Start()

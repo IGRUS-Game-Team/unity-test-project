@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// ColliderAuto.cs 박정민
+/// 박스 콜라이더 자동으로 씌워주는 스크립트
+/// 콜라이더 쓰고자 하는 오브젝트에 컴포넌트로 넣고 ...누른 후 reset누르면 적용
+/// </summary>
 [ExecuteAlways] // 에디터에서도 작동
 public class ColliderAuto : MonoBehaviour
 {
