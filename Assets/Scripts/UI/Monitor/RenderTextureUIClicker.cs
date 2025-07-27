@@ -56,6 +56,7 @@ public class RenderTextureUIClicker : MonoBehaviour
         PointerEventData ped = new PointerEventData(eventSystem) { position = screenPos };
         var results = new List<RaycastResult>();
         uiRaycaster.Raycast(ped, results);
+        Debug.Log($"Raycast hit count: {results.Count}");
         foreach (var r in results)
         {
             ExecuteEvents.Execute(r.gameObject, ped, ExecuteEvents.pointerClickHandler);
