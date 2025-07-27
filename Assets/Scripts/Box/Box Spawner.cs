@@ -33,6 +33,10 @@ public class BoxSpawner : MonoBehaviour
         randomDropRange = Random.Range(0f, 3f);
         spawnPoint = new Vector3(currentPosition.x + randomDropRange, currentPosition.y + spawnHeight, currentPosition.z);
         var newBlock = Instantiate(deilveryBox, spawnPoint, Quaternion.identity);
-        selectionManager.allBlocks.Add(newBlock.GetComponent<BlockOutLiner>());
+
+        var blockOutLiner = newBlock.GetComponent<BlockOutLiner>();
+        if (blockOutLiner != null) {
+            selectionManager.allBlocks.Add(newBlock.GetComponent<BlockOutLiner>());
+        }
     }
 }
