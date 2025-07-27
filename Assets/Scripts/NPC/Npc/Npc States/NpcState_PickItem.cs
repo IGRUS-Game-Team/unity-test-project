@@ -3,7 +3,12 @@ using UnityEngine;
 public class NpcState_PickItem : IState
 {
     readonly NpcController _npc;
-    public NpcState_PickItem(NpcController npc){ _npc = npc; }
+    QueueManager _queue;
+    public NpcState_PickItem(NpcController npc)
+    {
+        _npc = npc;
+        _queue = Object.FindObjectOfType<QueueManager>();
+    }
 
     public void Enter()
     {
@@ -16,11 +21,28 @@ public class NpcState_PickItem : IState
 
         _npc.Anim.Play(clipName);
     }
+
     public void Tick()
     {
-        // 애니 끝났다고 가정하고 바로 나가기
-        if (!_npc.HasItemInHand) return; // 애니메이션 이벤트로 true 될 때까지 대기
-        _npc.SM.SetState(new NpcState_Leave(_npc));
+        if (!_npc.HasItemInHand) return;             // 아이템 집기 완료 여부
+
+        // QueueManager 캐싱(한 번만 찾음)
+        if (_queue == null)
+        {
+            _queue = Object.FindObjectOfType<QueueManager>();
+        }
+        
+        // (1) 큐 매니저가 있으면 줄 서러 가기
+        if (_queue != null)
+        {
+            _npc.SM.SetState(new NpcState_ToQueue(_npc, _queue));   // ← 여기!
+        }
+        // (2) 없으면 기존 로직대로 바로 퇴장
+        else
+        {
+            _npc.SM.SetState(new NpcState_Leave(_npc));
+        }
     }
+
     public void Exit() { }
 }
