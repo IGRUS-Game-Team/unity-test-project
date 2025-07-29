@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+/// <summary>
+/// PlayerObjectSetController.cs 박정민
+/// set 키 (G) 눌렀을때 Hold된 오브젝트 놓는 역할 하는 클래스
+/// Player에 붙인다.
+/// 직렬화로 previewGreen, previewRed 넣어줘야함 (비활성 상태로)
+/// </summary>
 
-//PlayerObjectSetController.cs 박정민
-//set 키 (G) 눌렀을때 Hold된 오브젝트 놓는 역할 하는 클래스
-//Player에 붙인다.
-//직렬화로 previewGreen, previewRed 넣어줘야함 (비활성 상태로)
 public class PlayerObjectSetController : MonoBehaviour
 {
     [SerializeField] GameObject previewGreen; //물건 set 가능한 부분 나타내는 초록 블록

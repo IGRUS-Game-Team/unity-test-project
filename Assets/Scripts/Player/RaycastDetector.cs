@@ -1,8 +1,11 @@
 using UnityEngine;
 
-//RaycastDetector.cs 박정민
-//Player에 붙는 스크립트입니다.
-//Player가 바라보는 방향으로 ray를 쏴서 맞는 오브젝트를 HitObject 변수에 저장하는 역할을 합니다.
+/// <summary>
+/// RaycastDetector.cs 박정민
+/// Player에 붙는 스크립트입니다.
+/// Player가 바라보는 방향으로 ray를 쏴서 맞는 오브젝트를 HitObject 변수에 저장하는 역할을 합니다.
+/// </summary>
+
 public class RaycastDetector : MonoBehaviour
 {
     public static RaycastDetector Instance { get; private set; }
@@ -11,7 +14,7 @@ public class RaycastDetector : MonoBehaviour
 
     [SerializeField] float range = 5f; //ray의 길이를 정할 수 있음
     [SerializeField] LayerMask layer; // 지정한 레이어만 hit 됨. ex) box 레이어 <- 작명 바꿔야할듯
-    private void Awake() => Instance = this; 
+    private void Awake() => Instance = this;
 
     void Update()
     {

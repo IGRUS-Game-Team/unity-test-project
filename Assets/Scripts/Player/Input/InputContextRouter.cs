@@ -2,11 +2,13 @@ using System;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UIElements;
+/// <summary>
+/// InputContextRouter.cs 박정민
+/// 오브젝트마다 한 키(ex click이 박스에서는 Hold로, 모니터에서는 상호작용으로, UI에서는 버튼의 이벤트 작동으로 적용)가
+/// 다르게 쓰이는걸 나누기 위해 만든 클래스
+/// 빈오브젝트에 붙임
+/// </summary>
 
-//InputContextRouter.cs 박정민
-//오브젝트마다 한 키(ex click이 박스에서는 Hold로, 모니터에서는 상호작용으로, UI에서는 버튼의 이벤트 작동으로 적용)가
-//다르게 쓰이는걸 나누기 위해 만든 클래스
-//빈오브젝트에 붙임
 
 public class InputContextRouter : MonoBehaviour
 {
