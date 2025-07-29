@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b8ffd7ecded664aa79dc85fe2dd5ca, type: 3}
   m_Name: Helmet
   m_EditorClassIdentifier: 
-  ItemId: 
-  displayName: 
-  category: 0
-  baseCost: 0
+  ItemId: 4
+  displayName: 3lv Helmet
+  category: 1
+  baseCost: 30000000
   rarity: 0
   regulationLevel: 0
   BaseDemand: 0
