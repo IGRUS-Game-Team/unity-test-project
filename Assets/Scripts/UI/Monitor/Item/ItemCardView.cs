@@ -44,7 +44,7 @@ public class ItemCardView : MonoBehaviour
         data = item;
         //  icon.sprite = data.icon;
         nameText.text = data.displayName;
-        unitPriceText.text = $"${data.unitPrice:F2}";
+        unitPriceText.text = $"${data.baseCost:F2}";
         UpdateAmount(amount);
 
         plusBtn.onClick.AddListener(() => ChangeAmount(1));
@@ -62,7 +62,7 @@ public class ItemCardView : MonoBehaviour
     void UpdateAmount(int a)
     {
         amountText.text = a.ToString();
-        totalText.text = $"${(data.unitPrice * a):F2}";
+        totalText.text = $"${(data.baseCost * a):F2}";
     }
 
     private void Test_OnSpacePressed(ItemData itemData, int a) 
