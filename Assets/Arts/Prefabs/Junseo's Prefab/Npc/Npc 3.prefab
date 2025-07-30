@@ -114,6 +114,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Npc 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7942588781792600894, guid: b86949561eeb7324a9bdd8fa5754b2fa, type: 3}
+      propertyPath: handSocket
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5210155691407330602, guid: b86949561eeb7324a9bdd8fa5754b2fa, type: 3}

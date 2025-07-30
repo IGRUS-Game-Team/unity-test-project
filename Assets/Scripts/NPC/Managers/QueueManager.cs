@@ -1,107 +1,126 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 카운터 앞에 줄을 세우고 이동·시선을 관리한다.
 public class QueueManager : MonoBehaviour
 {
-    /* ── 인스펙터 슬롯 ───────────────────────────── */
-    [Header("줄 노드(맨 앞 = Element 0)")]
-    [SerializeField] Transform[] nodes;          // Node0 ~ NodeN
+    /* ---------- 인스펙터 설정 ---------- */
 
-    [Header("NPC 배회 포인트들")]
-    [SerializeField] Transform[] wanderPoints;
+    [Header("줄 서는 위치(노드)")]
+    [SerializeField] private Transform[] spots;          // 줄 칸 위치
 
-    [Header("카운터 Transform")]
-    [SerializeField] Transform counter;          // 계산대 피벗
+    [Header("줄이 꽉 찼을 때 NPC가 배회할 지점")]
+    [SerializeField] private Transform[] wanderPoints;   // 배회 포인트
 
-    /* ── 프로퍼티 ───────────────────────────────── */
-    readonly List<NpcController> line = new();
+    [Header("계산대 Transform")]
+    [SerializeField] private Transform counter;          // 카운터 위치
 
-    public Transform Counter         => counter;
-    public Transform[] WanderPoints  => wanderPoints;
+    /* ---------- 내부 상태 ---------- */
 
-    /* ── 초기화 : Node 자동 수집 (옵션) ───────────── */
-    void Awake()
+    private readonly List<NpcController> waitingLine = new List<NpcController>(); // 줄에 선 NPC 목록
+
+    /* ---------- 외부 접근 프로퍼티 ---------- */
+
+    public Transform CounterTransform => counter;        // 카운터 위치 제공
+    public Transform[] WanderPoints => wanderPoints;     // 배회 포인트 제공
+
+    /* ---------- 초기화 ---------- */
+
+    private void Awake()
     {
-        if (nodes == null || nodes.Length == 0)
+        // spots 배열이 비어 있으면, 자식 오브젝트 중 이름에 "spot"이 들어간 Transform을 자동 수집
+        if (spots == null || spots.Length == 0)
         {
-            var list = new List<Transform>();
-            foreach (Transform t in transform)
-                if (t.name.Contains("Node"))
-                    list.Add(t);
+            List<Transform> foundSpots = new List<Transform>();
 
-            list.Sort((a, b) => string.CompareOrdinal(a.name, b.name)); // Node0, Node1 …
-            nodes = list.ToArray();
+            foreach (Transform child in transform)                       // QueueManager의 자식 순회
+            {
+                if (child.name.Contains("spot"))                         // 이름에 "spot"이 있으면
+                {
+                    foundSpots.Add(child);                               // 후보 목록에 추가
+                }
+            }
+
+            // 이름 순으로 정렬해 줄 순서를 유지
+            foundSpots.Sort((Transform a, Transform b) => string.CompareOrdinal(a.name, b.name));
+
+            spots = foundSpots.ToArray();                                // 배열로 변환
         }
     }
 
-    /* ─────────────────────────────────────────────
-       0)  줄 전체 ‘시선’ 재계산  (맨 앞 → Counter, 그 뒤 → 앞사람)
-    ───────────────────────────────────────────── */
-    void RefreshLookTargets()
-    {
-        for (int i = 0; i < line.Count; i++)
-        {
-            Transform look = (i == 0) ? counter
-                                      : line[i - 1].transform;
+    /* ---------- 내부 유틸 ---------- */
 
-            line[i].SetLookTarget(look);   // NpcController 쪽에 구현되어 있어야 함
+    // 줄 전체의 시선을 다시 계산
+    private void RefreshLookTargets()
+    {
+        // 첫 번째 NPC는 계산대를, 그 뒤는 앞사람을 바라보도록 설정
+        for (int i = 0; i < waitingLine.Count; i++)
+        {
+            Transform lookTarget = (i == 0) ? counter : waitingLine[i - 1].transform;
+            waitingLine[i].SetLookTarget(lookTarget);
         }
     }
 
-    /* ─────────────────────────────────────────────
-       1)  줄 서기 시도
-    ───────────────────────────────────────────── */
-    public bool TryEnqueue(NpcController npc, out Transform node)
+    /* ---------- 외부 호출 메서드 ---------- */
+
+    // NPC가 줄 서기를 시도
+    public bool TryEnqueue(NpcController npcController, out Transform node)
     {
-        if (line.Count >= nodes.Length)
+        // 줄이 가득 찼는지 확인
+        if (waitingLine.Count >= spots.Length)
         {
-            node = null;                               // 줄 가득 참
+            node = null;                                 // 자리 없음
             return false;
         }
 
-        line.Add(npc);
-        node = nodes[line.Count - 1];                  // 내 자리
-        RefreshLookTargets();                          // ★ 시선 재계산
+        // 줄에 NPC 추가
+        waitingLine.Add(npcController);
+
+        // 방금 추가된 NPC가 서야 할 노드
+        node = spots[waitingLine.Count - 1];
+
+        // 시선 재계산
+        RefreshLookTargets();
+
         return true;
     }
 
-    /* ─────────────────────────────────────────────
-       2)  맨 앞 결제 완료 → 한 칸씩 당기기
-    ───────────────────────────────────────────── */
+    // 맨 앞 NPC가 결제 완료 → 한 칸씩 앞으로 이동
     public void DequeueFront()
     {
-        if (line.Count == 0) return;
+        if (waitingLine.Count == 0) return;              // 줄이 비면 무시
 
-        line.RemoveAt(0);
+        waitingLine.RemoveAt(0);                         // 맨 앞 제거
 
-        // 각 NPC에게 새 노드 전달
-        for (int i = 0; i < line.Count; i++)
-            line[i].SetQueueTarget(nodes[i]);
+        // 남은 NPC들에게 새 노드 지정
+        for (int i = 0; i < waitingLine.Count; i++)
+        {
+            waitingLine[i].SetQueueTarget(spots[i]);
+        }
 
-        RefreshLookTargets();                          // ★ 시선 재계산
+        RefreshLookTargets();                            // 시선 재계산
     }
 
-    /* ─────────────────────────────────────────────
-       3)  내가 맨 앞인가?
-    ───────────────────────────────────────────── */
-    public bool IsFront(NpcController npc)
+    // 특정 NPC가 맨 앞인지 확인
+    public bool IsFront(NpcController npcController)
     {
-        return line.Count > 0 && line[0] == npc;
+        return waitingLine.Count > 0 && waitingLine[0] == npcController;
     }
 
-    /* ─────────────────────────────────────────────
-       4)  줄 중간에서 포기·삭제될 때
-    ───────────────────────────────────────────── */
-    public void Remove(NpcController npc)
+    // 줄 중간에서 NPC가 포기하거나 제거될 때
+    public void Remove(NpcController npcController)
     {
-        int idx = line.IndexOf(npc);
-        if (idx < 0) return;                           // 줄에 없으면 무시
+        int index = waitingLine.IndexOf(npcController);  // NPC 위치 찾기
+        if (index < 0) return;                           // 줄에 없으면 무시
 
-        line.RemoveAt(idx);
+        waitingLine.RemoveAt(index);                     // 목록에서 제거
 
-        for (int i = idx; i < line.Count; i++)
-            line[i].SetQueueTarget(nodes[i]);
+        // 뒤쪽 NPC 노드 업데이트
+        for (int i = index; i < waitingLine.Count; i++)
+        {
+            waitingLine[i].SetQueueTarget(spots[i]);
+        }
 
-        RefreshLookTargets();                          // ★ 시선 재계산
+        RefreshLookTargets();                            // 시선 재계산
     }
 }

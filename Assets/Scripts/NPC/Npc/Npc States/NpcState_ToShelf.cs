@@ -1,38 +1,64 @@
 using UnityEngine;
 
+// NPC가 선반 위치로 이동했다가 도착하면 물건 집기 대기 상태로 전환
 public class NpcState_ToShelf : IState
 {
-    readonly NpcController _npc;
-    public NpcState_ToShelf(NpcController npc) { _npc = npc; }
+    private readonly NpcController npcController;   // 이 상태를 수행할 NPC
+    private const string WalkingAnim = "Walking";   // 걷기 애니메이션 이름
 
+    // 생성자: NPC 참조를 받아 필드에 할당
+    public NpcState_ToShelf(NpcController npcController)
+    {
+        this.npcController = npcController;         // 필드 초기화
+    }
+
+    // 상태 진입 시 호출: 이동 재개, 목적지 설정, 애니메이션 실행
     public void Enter()
     {
-        _npc.Agent.isStopped = false;
-        _npc.Agent.SetDestination(_npc.TargetShelfSlot.position);
-        _npc.Anim.Play("Walking");
+        npcController.agent.isStopped = false;                                              // 이동 정지 해제
+        npcController.agent.SetDestination(npcController.targetShelfSlot.position);         // 목적지: 선반 슬롯 위치
+        npcController.animator.Play(WalkingAnim);                                           // 걷기 애니메이션 재생
     }
 
+    // 매 프레임 호출: 도착 여부 검사 후 회전 보정 및 다음 상태 전환
     public void Tick()
     {
-        if (_npc.Agent.pathPending) return;
-
-        bool arrived = _npc.Agent.remainingDistance <= 0.1f && _npc.Agent.velocity.sqrMagnitude < 0.01f;
-
-        if (!arrived) return;
-
-        _npc.Agent.updateRotation = false;              // 에이전트 자동 회전 끔
-
-        Vector3 lookdir = -_npc.TargetShelfSlot.forward;
-        lookdir.y = 0f;                                      // 위아래 방향 제거
-
-        if (lookdir != Vector3.zero)
+        // 경로 계산 중이면 도착 검사하지 않고 대기
+        if (npcController.agent.pathPending == true)
         {
-            _npc.transform.rotation = Quaternion.LookRotation(lookdir); 
+            return;
         }
 
-        _npc.Agent.isStopped = true;      // ← 도착 후 즉시 정지
-        _npc.SM.SetState(new NpcState_PickWait(_npc));
+        // 남은 거리와 속도를 기반으로 도착 여부 판단
+        bool arrived = 
+            npcController.agent.remainingDistance <= 0.1f &&
+            npcController.agent.velocity.sqrMagnitude < 0.01f;
+        if (arrived == false)
+        {
+            return;  
+        }
+
+        // 자동 회전 끄기 (직접 회전 처리할 것)
+        npcController.agent.updateRotation = false;
+
+        // 선반의 전방 벡터 가져오기
+        Vector3 shelfForward = npcController.targetShelfSlot.forward;
+        // 수평 반대 방향 계산 (NPC가 선반을 바라보도록)
+        Vector3 lookDirection = new Vector3(-shelfForward.x, 0f, -shelfForward.z);
+        // 유효한 벡터인지 확인 후 회전 적용
+        if (lookDirection.sqrMagnitude >= 0.0001f)
+        {
+            npcController.transform.rotation = Quaternion.LookRotation(lookDirection);
+        }
+
+        // 이동 중지 후 물건 집기 대기 상태로 전환
+        npcController.agent.isStopped = true;
+        npcController.stateMachine.SetState(
+            new NpcState_PickWait(npcController));
     }
 
-    public void Exit() { }
+    // 상태 종료 시 호출: 별도 복원 작업 없음
+    public void Exit()
+    {
+    }
 }

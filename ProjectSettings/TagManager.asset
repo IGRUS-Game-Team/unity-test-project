@@ -6,12 +6,12 @@ TagManager:
   tags:
   - CinemachineTarget
   - SettableSurface
-  - NPC
   - Box
   - Monitor
   - Kiosk
   - Pass
   - Arrived Shelf
+  - Npc
   layers:
   - Default
   - TransparentFX
