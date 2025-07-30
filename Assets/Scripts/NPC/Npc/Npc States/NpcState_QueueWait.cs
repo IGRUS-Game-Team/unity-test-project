@@ -1,50 +1,61 @@
 using UnityEngine;
 
+// NPC가 줄에 서서 대기하는 동안 처리하는 상태
 public class NpcState_QueueWait : IState
 {
-    readonly NpcController _npc;
-    readonly QueueManager  _queue;
-    readonly Transform     _myNode;
+    private readonly NpcController npcController;  // 이 상태의 대상 NPC
+    private readonly QueueManager queueManager;    // 줄 관리 매니저
+    private readonly Transform myNode;             // NPC가 대기 중인 자리
 
-    public NpcState_QueueWait(NpcController npc, QueueManager queue, Transform node)
-    { _npc = npc; _queue = queue; _myNode = node; }
+    private const string StandingAnim = "Standing"; // 대기 애니메이션 이름
 
+    // 생성자: 필요한 참조를 받아 필드에 할당
+    public NpcState_QueueWait(
+        NpcController npcController,
+        QueueManager  queueManager,
+        Transform     node)
+    {
+        this.npcController = npcController;  // 필드 초기화
+        this.queueManager  = queueManager;
+        this.myNode        = node;
+    }
+
+    // 상태 시작 시 호출: 이동·회전 멈추고 애니메이션 재생
     public void Enter()
     {
-        _npc.Agent.isStopped = true;
-        _npc.Agent.updateRotation = false;          // 고정 시선
-        _npc.Anim.Play("Standing");
-        
-        // 바로 한 번 돌려 놓고 시작
-        _npc.FaceLookTarget(999f);                  // 999 → 즉시 스냅
+        npcController.agent.isStopped      = true;                   // 이동 중지
+        npcController.agent.updateRotation = false;                  // 자동 회전 중단
+        npcController.transform.LookAt(queueManager.CounterTransform); // 카운터 쪽 바라보기
+        npcController.animator.Play(StandingAnim);                   // 대기 애니메이션 실행
     }
 
+    // 매 프레임 호출: 자리 이동·결제 전환 로직
     public void Tick()
     {
-        /* 1) 몸을 LookTarget 쪽으로 계속 보정 */
-        _npc.FaceLookTarget(540f);                  // 부드러운 회전 속도
-
-        /* 2) 줄이 한 칸 전진했을 때 새 노드 지정 */
-        if (_npc.QueueTarget != _myNode)
+        // 1) 줄이 앞으로 당겨져서 내 자리가 바뀌었는지 확인
+        if (npcController.QueueTarget != this.myNode)
         {
-            _npc.Agent.isStopped = false;
-            _npc.Agent.SetDestination(_npc.QueueTarget.position);
-            return;
+            npcController.agent.isStopped = false;                   // 이동 재개
+            npcController.agent.SetDestination(npcController.QueueTarget.position); // 새 자리로 이동
+            return;                                                  // 이후 로직 실행 안 함
         }
 
-        /* 3) 맨 앞 & 아이템 들고 있으면 결제 상태 */
-        if (_queue.IsFront(_npc) && _npc.HasItemInHand)
+        // 2) 내가 줄 맨 앞이고, 아이템을 이미 들고 있으면 결제 상태로 전환
+        if (queueManager.IsFront(npcController) && npcController.hasItemInHand)
         {
-            _npc.SM.SetState(
+            npcController.stateMachine.SetState(
                 new NpcState_OfferPayment(
-                _npc, _queue,
-                _npc.CashPrefab, _npc.CardPrefab,
-                _queue.Counter));
+                    npcController,                                 // NPC 컨트롤러
+                    queueManager,                                  // 줄 관리 매니저
+                    npcController.CashPrefab,                      // 현금 프리팹
+                    npcController.CardPrefab,                      // 카드 프리팹
+                    queueManager.CounterTransform));                // 계산대 위치
         }
     }
 
+    // 상태 종료 시 호출: 자동 회전 복원
     public void Exit()
     {
-        _npc.Agent.updateRotation = true;   // 회전 다시 허용
+        npcController.agent.updateRotation = true;                   // 자동 회전 재개
     }
 }

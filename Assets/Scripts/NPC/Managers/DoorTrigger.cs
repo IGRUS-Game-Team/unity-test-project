@@ -1,94 +1,80 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// NPC가 들어올 때 빈 선반을 배정하고, 동시에 머무는 인원 수를 제한한다.
 public class DoorTrigger : MonoBehaviour
 {
-    [Header("Npc가 갈 수 있는 선반들")]
-    [SerializeField] List<Transform> slotParents = new();
+    [Header("NPC가 탐색할 선반 부모")]
+    [SerializeField] private List<Transform> slotParents = new List<Transform>();
 
-    [Header("퇴장 포인트")]
-    [SerializeField] Transform exitPoint;
+    [Header("NPC 퇴장 위치")]
+    [SerializeField] private Transform exitPoint;
 
-    [Header("최대 인원")]
-    [SerializeField] int maxInStore = 10;
+    [Header("매장 최대 인원")]
+    [SerializeField] private int maxInStore = 10;
 
-    ShelfSlot[] _slots;
-    int _current;
+    private const string TagNpc = "Npc";      // 다른 스크립트와 동일하게 유지
 
-    void Awake()
+    private ShelfSlot[] slots;                // 매장 안 모든 슬롯
+    private int insideCount;                  // 현재 매장 내부 NPC 수
+
+    private void Awake()
     {
-        var list = new List<ShelfSlot>();
-
-        // 부모가 여러 개면 각각 돌면서 슬롯 모으기
-        foreach (var parent in slotParents)
+        // slotParents 하위에서 ShelfSlot을 수집
+        List<ShelfSlot> collected = new List<ShelfSlot>();
+        foreach (Transform parent in slotParents)
         {
             if (parent == null) continue;
-            list.AddRange(parent.GetComponentsInChildren<ShelfSlot>(false));
+            collected.AddRange(parent.GetComponentsInChildren<ShelfSlot>(false));
         }
-
-        _slots = list.ToArray();
+        slots = collected.ToArray();
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("NPC")) return;
-        var npc = other.GetComponent<NpcController>();
-        if (npc == null || npc.IsLeaving) return;
+        // NPC만 처리
+        if (!other.CompareTag(TagNpc)) return;
 
-        // 1) 인원 초과?
-        if (_current >= maxInStore)
-        {
-            npc.StartLeaving(exitPoint);
-            return;
-        }
+        NpcController npc = other.GetComponent<NpcController>();
+        if (npc == null || npc.isLeaving) return;
 
-        // 2) 빈 슬롯 예약
-        List<ShelfSlot> freeSlots = new();
-
-        foreach (var slot in _slots)
+        // 비어 있는 슬롯 찾기
+        List<ShelfSlot> freeSlots = new List<ShelfSlot>();
+        foreach (ShelfSlot slot in slots)
         {
             if (!slot.IsReserved) freeSlots.Add(slot);
         }
 
-        // 3) 빈 슬롯 없으면 나가기
-        if (freeSlots.Count == 0 || _current >= maxInStore)
+        // 슬롯이 없거나 인원 초과면 입장 거부
+        if (freeSlots.Count == 0 || insideCount >= maxInStore)
         {
             npc.StartLeaving(exitPoint);
             return;
         }
 
-        // ★ 무작위 슬롯 하나 뽑기
+        // 랜덤 빈 슬롯 선택 후 예약
         ShelfSlot chosen = freeSlots[Random.Range(0, freeSlots.Count)];
-        chosen.TryReserve();   // 예약 확정
+        chosen.TryReserve();
 
-        // 4) 입장 허가
-        _current++;
+        // NPC 입장 처리
+        insideCount++;
         npc.SetDoor(this);
-        npc.InStore = true;
-
-        npc.TargetShelfSlot = chosen.transform;
-        npc.ExitPoint = exitPoint;
-        npc.SM.SetState(new NpcState_ToShelf(npc));
+        npc.inStore = true;
+        npc.AllowEntry(chosen.transform, exitPoint);
     }
 
-    
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("NPC")) return;
+        if (!other.CompareTag(TagNpc)) return;
 
-        var npc = other.GetComponent<NpcController>();
+        NpcController npc = other.GetComponent<NpcController>();
         if (npc == null) return;
 
-        // “매장 안이었고” + “퇴장 중일 때”만 카운트 감소
-        if (npc.InStore && npc.IsLeaving)
+        // 매장에 있었고 퇴장 중이라면 인원 수 감소
+        if (npc.inStore && npc.isLeaving)
         {
-            DecreaseCount();
-            npc.InStore = false;        // 플래그 초기화
+            insideCount = Mathf.Max(0, insideCount - 1);
+            npc.inStore = false;
         }
-    }
-
-    void DecreaseCount()
-    {
-        _current = Mathf.Max(0, _current - 1);
     }
 }

@@ -1,18 +1,35 @@
 using UnityEngine;
 
+// NPC를 출입문으로 이동시키는 상태
 public class NpcState_ToDoor : IState
 {
-    readonly NpcController _npc;
-    readonly Transform     _door;
+    private readonly NpcController npcController;   // 대상 NPC
+    private readonly Transform doorTransform;       // NPC가 향할 출입문 위치
 
-    public NpcState_ToDoor(NpcController npc, Transform door){ _npc = npc; _door = door; }
+    private const string WalkingAnim = "Walking";   // 걷기 애니메이션 이름
 
+    // 생성자: NPC와 출입문 Transform을 받아 초기 설정
+    public NpcState_ToDoor(NpcController npcController, Transform doorTransform)
+    {
+        this.npcController = npcController;         // 필드에 NPC 저장
+        this.doorTransform  = doorTransform;        // 필드에 출입문 위치 저장
+    }
+
+    // 상태 진입 시 호출: 이동 재개, 목적지 설정, 애니메이션 실행
     public void Enter()
     {
-        _npc.Agent.isStopped = false;
-        _npc.Agent.SetDestination(_door.position);
-        _npc.Anim.Play("Walking");
+        npcController.agent.isStopped = false;                          // 이동 정지 해제
+        npcController.agent.SetDestination(doorTransform.position);     // 목적지: 출입문
+        npcController.animator.Play(WalkingAnim);                       // 걷기 애니메이션 재생
     }
-    public void Tick() { /* 문 앞 Trigger가 처리하므로 여기선 아무것도 안함 */ }
-    public void Exit() { }
+
+    // 매 프레임 호출: 이 상태는 이동만 담당하므로 별도 처리 없음
+    public void Tick()
+    {
+    }
+
+    // 상태 종료 시 호출: 추가 정리 작업 없음
+    public void Exit()
+    {
+    }
 }
