@@ -1,61 +1,74 @@
 using UnityEngine;
 
-// NPC가 줄에 서서 대기하는 동안 처리하는 상태
+// NPC가 줄에 서서 대기 중, 자리 이동 시 걷기 애니메이션, 도착 후 대기 애니메이션 재생
 public class NpcState_QueueWait : IState
 {
-    private readonly NpcController npcController;  // 이 상태의 대상 NPC
+    private readonly NpcController npcController;  // 이 상태를 수행할 NPC
     private readonly QueueManager queueManager;    // 줄 관리 매니저
-    private readonly Transform myNode;             // NPC가 대기 중인 자리
+    private Transform myNode;                      // NPC가 현재 서 있는 자리
 
-    private const string StandingAnim = "Standing"; // 대기 애니메이션 이름
+    private const string StandingAnim   = "Standing";  // 대기 애니메이션 이름
+    private const string WalkingAnim    = "Walking";   // 걷기 애니메이션 이름
+    private const float  ArrivalDistance = 0.1f;       // 도착 허용 오차 거리
 
-    // 생성자: 필요한 참조를 받아 필드에 할당
     public NpcState_QueueWait(
         NpcController npcController,
         QueueManager  queueManager,
         Transform     node)
     {
-        this.npcController = npcController;  // 필드 초기화
-        this.queueManager  = queueManager;
-        this.myNode        = node;
+        this.npcController = npcController;  // NPC 참조 저장
+        this.queueManager  = queueManager;   // 매니저 참조 저장
+        this.myNode        = node;           // 초기 자리 저장
     }
 
-    // 상태 시작 시 호출: 이동·회전 멈추고 애니메이션 재생
     public void Enter()
     {
-        npcController.agent.isStopped      = true;                   // 이동 중지
+        npcController.agent.ResetPath();                             // 이전 이동 경로 완전 초기화
+        npcController.agent.isStopped      = true;                   // 이동 정지
         npcController.agent.updateRotation = false;                  // 자동 회전 중단
-        npcController.transform.LookAt(queueManager.CounterTransform); // 카운터 쪽 바라보기
+        npcController.transform.LookAt(queueManager.CounterTransform); // 카운터 방향으로 회전
         npcController.animator.Play(StandingAnim);                   // 대기 애니메이션 실행
     }
 
-    // 매 프레임 호출: 자리 이동·결제 전환 로직
     public void Tick()
     {
-        // 1) 줄이 앞으로 당겨져서 내 자리가 바뀌었는지 확인
+        // 1) 자리가 변경된 경우 → 걷기 애니메이션, 새 자리로 이동
         if (npcController.QueueTarget != this.myNode)
         {
-            npcController.agent.isStopped = false;                   // 이동 재개
-            npcController.agent.SetDestination(npcController.QueueTarget.position); // 새 자리로 이동
-            return;                                                  // 이후 로직 실행 안 함
+            npcController.agent.ResetPath();                             // 경로 재설정
+            npcController.agent.isStopped      = false;                  // 이동 재개
+            npcController.agent.SetDestination(npcController.QueueTarget.position); // 새 자리 목적지 설정
+            npcController.animator.Play(WalkingAnim);                    // 걷기 애니메이션 실행
+            this.myNode = npcController.QueueTarget;                     // 현재 자리 업데이트
+            return;                                                      // 이동만 처리하고 종료
         }
 
-        // 2) 내가 줄 맨 앞이고, 아이템을 이미 들고 있으면 결제 상태로 전환
-        if (queueManager.IsFront(npcController) && npcController.hasItemInHand)
+        // 2) 도착 여부 판단: 경로 계산 완료 + 거리 허용 범위 이내
+        bool arrived = npcController.agent.pathPending == false &&
+                       npcController.agent.remainingDistance <= ArrivalDistance;
+
+        // 3) 도착했으면 대기 애니메이션으로 전환
+        if (arrived)
+        {
+            npcController.agent.isStopped = true;        // 완전 정지
+            npcController.animator.Play(StandingAnim);   // 대기 애니메이션 재생
+        }
+
+        // 4) 맨 앞이고 물건을 들고 있으면 결제 상태로 전환
+        if (arrived && queueManager.IsFront(npcController) && npcController.hasItemInHand)
         {
             npcController.stateMachine.SetState(
                 new NpcState_OfferPayment(
-                    npcController,                                 // NPC 컨트롤러
-                    queueManager,                                  // 줄 관리 매니저
-                    npcController.CashPrefab,                      // 현금 프리팹
-                    npcController.CardPrefab,                      // 카드 프리팹
-                    queueManager.CounterTransform));                // 계산대 위치
+                    npcController,
+                    queueManager,
+                    npcController.CashPrefab,
+                    npcController.CardPrefab,
+                    queueManager.CounterTransform));           // 결제 상태로 이동
         }
     }
 
-    // 상태 종료 시 호출: 자동 회전 복원
     public void Exit()
     {
-        npcController.agent.updateRotation = true;                   // 자동 회전 재개
+        npcController.agent.updateRotation = true;         // 자동 회전 복원
     }
 }
