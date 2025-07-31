@@ -3,10 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName="Shop/Item")]
 public class ItemData : ScriptableObject
 {
-    public string id;
+    public string ItemId;
     public string displayName;
+    public ItemCategory category;
+    public float baseCost;
+    public float rarity;
+    public int regulationLevel;
+    public int BaseDemand;
     public Sprite icon;
-    public float unitPrice;
-    // public ItemCategory category;
-    // public DisplayType displayType;
+    public DisplayType displayType;
 }

@@ -1,19 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//SelectionManager.cs 박정민
-//Player에 붙는 스크립트입니다.
-//오브젝트(ex box, monitor 등)의 선택됨 유무를 판단하는 클래스입니다.
+/// <summary>
+/// SelectionManager.cs 박정민
+/// Player에 붙는 스크립트입니다.
+/// 오브젝트(ex box, monitor 등)의 선택됨 유무를 판단하는 클래스입니다.
+/// </summary>
+
 public class SelectionManager : MonoBehaviour
 {
     public List<BlockOutLiner> allBlocks = new List<BlockOutLiner>(); //BlockOutLiner.cs가 적용된 오브젝트들을 담는 리스트입니다.
-    [SerializeField] public float pickupRange = 5f; 
+    [SerializeField] public float pickupRange = 5f;
     [SerializeField] public LayerMask pickupLayer;
     void Start()
     {
         BlockOutLiner[] found = FindObjectsOfType<BlockOutLiner>();
         // 게임 시작하면 맵에 있는 모든 BloutOutLiner가 적용된 오브젝트를 찾습니다.
-        allBlocks.AddRange(found); 
+        allBlocks.AddRange(found);
     }
 
     void Update()

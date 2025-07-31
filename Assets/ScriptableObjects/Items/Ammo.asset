@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15b8ffd7ecded664aa79dc85fe2dd5ca, type: 3}
-  m_Name: Pistol
+  m_Name: Ammo
   m_EditorClassIdentifier: 
-  ItemId: 1
-  displayName: air pistol
-  category: 0
-  baseCost: 3000
+  ItemId: 123
+  displayName: ammo
+  category: 2
+  baseCost: 30
   rarity: 0
   regulationLevel: 0
   BaseDemand: 0

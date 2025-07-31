@@ -2,10 +2,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using StarterAssets;
 using System;
+/// <summary>
+/// PlayerObejctHoldController.cs 박정민
+/// input맵에 있는 Hold 키를 누르면 blockOutLiner가 켜지고 selected = true인 오브젝트를 
+/// Player /.../holdPoint 계층 구조 아래로 이동시키고 rigidbody를 isKinetic 켜서 고정시키는 역할을 하는 클래스
+/// </summary>
 
-//PlayerObejctHoldController.cs 박정민
-//input맵에 있는 Hold 키를 누르면 blockOutLiner가 켜지고 selected = true인 오브젝트를 
-//Player /.../holdPoint 계층 구조 아래로 이동시키고 rigidbody를 isKinetic 켜서 고정시키는 역할을 하는 클래스
 public class PlayerObjectHoldController : MonoBehaviour
 {
     [SerializeField] float placeRange = 3f;

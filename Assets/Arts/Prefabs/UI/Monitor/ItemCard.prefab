@@ -1389,6 +1389,9 @@ MonoBehaviour:
   plusBtn: {fileID: 4554755073419028130}
   minusBtn: {fileID: 764379210869975458}
   addBtn: {fileID: 7591730119479801610}
+  onAddToCart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5864832575406698303
 GameObject:
   m_ObjectHideFlags: 0
